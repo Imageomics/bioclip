@@ -7,7 +7,10 @@
 
   <title>BioCLIP: A Vision Foundation Model for the Tree of Life</title>
   <link rel="stylesheet" href="css/main.css" />
-  <link rel="icon" href="images/favicon.png" />
+  <link rel="icon" href="images/icons/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -15,9 +18,9 @@
     <h1>BioCLIP: A Vision Foundation Model for the Tree of Life</h1>
     <p class="centered">
       <sup>1</sup><a href="https://samuelstevens.me/">Samuel Stevens</a><sup>*</sup>,
-      <sup>1</sup><a href="">Jiamen (Lisa) Wu</a><sup>*</sup>,
-      <sup>1</sup><a href="">Matthew J Thompson</a>,
-      <sup>1</sup><a href="">Eliabeth M Campolongo</a>,
+      <sup>1</sup>Jiamen (Lisa) Wu<sup>*</sup>,
+      <sup>1</sup><a href="https://www.linkedin.com/in/thompson-m-j/">Matthew J Thompson</a>,
+      <sup>1</sup><a href="https://egrace479.github.io/">Elizabeth G Campolongo</a>,
       <sup>1</sup><a href="https://chanh.ee/">Chan Hee (Luke) Song</a>,
       <sup>1</sup><a href="https://davidcarlyn.wordpress.com/">David Edward Carlyn</a>,
       <sup>2</sup><a href="https://dong.li/">Li Dong</a>,
@@ -103,13 +106,6 @@
     </p>
 
     <h2 id="results">Results</h2>
-    <!-- <figure> -->
-    <!-- <a href="images/results-graph.jpg"> -->
-    <!-- <img srcset="" src="" alt="" loading="lazy"> -->
-    <!-- </a> -->
-    <!-- <figcaption>Caption here.</figcaption> -->
-    <!-- </figure> -->
-
     <p>
       We evaluate BioCLIP and three baselines (<a href="">CLIP</a>, <a href="">OpenCLIP</a>, and an iNat-only model that
       uses the same procedure as BioCLIP but trained only on <a href="">iNat21</a>) on a diverse set of biology-related
@@ -283,9 +279,9 @@
     <h2>Dataset</h2>
     <p>
       TreeOfLife-10M is the largest and most diverse available dataset of biology images.
-      We combine images from three sources, iNaturalist, BioSCAN-1M, and Encyclopedia of Life, to create a dataset of
+      We combine images from three sources, iNaturalist, BioSCAN-1M, and Encyclopedia of Life (<a href="https://eol.org">EOL</a>, accessed 29 July 2023), to create a dataset of
       10M images, spanning 450K+ species.
-      We provide a train/val split, and will release the dataset under a CC-BY-NC license.
+      <!-- We provide a train/val split, and will release the dataset under a CC-BY-NC license. -->
       We train BioCLIP on TreeOfLife-10M and release the weights for public use.
     </p>
 
@@ -323,13 +319,11 @@
   year = {2021},
   url = {https://kaggle.com/competitions/inaturalist-2021}
 }</pre>
-    <pre class="reference">@misc{gharaee2023step,
-  title={A Step Towards Worldwide Biodiversity Assessment: The BIOSCAN-1M Insect Dataset}, 
-  author={Zahra Gharaee and ZeMing Gong and Nicholas Pellegrino and Iuliia Zarubiieva and Joakim Bruslund Haurum and Scott C. Lowe and Jaclyn T. A. McKeown and Chris C. Y. Ho and Joschka McLeod and Yi-Yun C Wei and Jireh Agda and Sujeevan Ratnasingham and Dirk Steinke and Angel X. Chang and Graham W. Taylor and Paul Fieguth},
+    <pre class="reference">@inproceedings{gharaee2023step,
+  title={A Step Towards Worldwide Biodiversity Assessment: The {BIOSCAN-1M} Insect Dataset},
+  booktitle = {Advances in Neural Information Processing Systems ({NeurIPS}) Datasets \& Benchmarks Track},
+  author={Gharaee, Z. and Gong, Z. and Pellegrino, N. and Zarubiieva, I. and Haurum, J. B. and Lowe, S. C. and McKeown, J. T. A. and Ho, C. Y. and McLeod, J. and Wei, Y. C. and Agda, J. and Ratnasingham, S. and Steinke, D. and Chang, A. X. and Taylor, G. W. and Fieguth, P.},
   year={2023},
-  eprint={2307.10455},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV}
 }</pre>
   </main>
   <script src="js/scripts.js"></script>

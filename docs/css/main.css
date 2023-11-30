@@ -3,7 +3,7 @@
   --nice-gray: rgb(236, 240, 243);
   --main-width: 42em;
   font-size: 1.0em;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: "Noto Sans Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 html {
@@ -97,7 +97,9 @@ pre.reference {
 
 /* Figures */
 .figure-container {
-  max-width: 100%;
+  width: 98vw;
+  position: relative;
+  left: calc(-49vw + 50%);
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 4px;
