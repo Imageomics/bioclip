@@ -5,8 +5,5 @@ install: ## [Local development] Upgrade pip, install requirements, install packa
 install-training:
 	python -m pip install -r requirements-training.txt
 
-install-test: ## [Local development] Install test requirements
-	python -m pip install -r requirements-test.txt
-
-test: ## [Local development] Run unit tests
-	python -m pytest -x -s -v tests
+lint:
+	find src/evaluation -iname '*.py' | xargs ruff check

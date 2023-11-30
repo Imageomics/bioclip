@@ -171,6 +171,7 @@ imagenet_classnames = ["tench", "goldfish", "great white shark", "tiger shark", 
 
 
 openai_imagenet_template = [
+    lambda c: f'a photo of {c}.',
     lambda c: f'a bad photo of a {c}.',
     lambda c: f'a photo of many {c}.',
     lambda c: f'a sculpture of a {c}.',

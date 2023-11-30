@@ -27,14 +27,14 @@ try:
 except ImportError:
     hvd = None
 
-from open_clip import create_model_and_transforms, trace_model, get_tokenizer, create_loss
-from training.data import get_data
-from training.distributed import is_master, init_distributed_device, broadcast_object
-from training.logger import setup_logging
-from training.params import parse_args
-from training.scheduler import cosine_lr, const_lr, const_lr_cooldown
-from training.train import train_one_epoch, evaluate
-from training.file_utils import pt_load, check_exists, start_sync_process, remote_sync
+from ..open_clip import create_model_and_transforms, trace_model, get_tokenizer, create_loss
+from ..training.data import get_data
+from ..training.distributed import is_master, init_distributed_device, broadcast_object
+from ..training.logger import setup_logging
+from ..training.params import parse_args
+from ..training.scheduler import cosine_lr, const_lr, const_lr_cooldown
+from ..training.train import train_one_epoch, evaluate
+from ..training.file_utils import pt_load, check_exists, start_sync_process, remote_sync
 
 
 LATEST_CHECKPOINT_NAME = "epoch_latest.pt"
@@ -44,6 +44,10 @@ def random_seed(seed=42, rank=0):
     torch.manual_seed(seed + rank)
     np.random.seed(seed + rank)
     random.seed(seed + rank)
+    os.environ['PYTHONHASHSEED'] = str(seed + rank)
+    torch.cuda.manual_seed(seed + rank)
+    torch.cuda.manual_seed_all(seed + rank)
+    torch.backends.cudnn.deterministic = True
 
 
 def natural_key(string_):
@@ -76,7 +80,7 @@ def main(args):
         # This was a default in pytorch until 1.12
         torch.backends.cuda.matmul.allow_tf32 = True
         torch.backends.cudnn.benchmark = True
-        torch.backends.cudnn.deterministic = False
+        torch.backends.cudnn.deterministic = True
 
     # fully initialize distributed device environment
     device = init_distributed_device(args)
@@ -373,6 +377,7 @@ def main(args):
         # you will have to configure this for your project!
         wandb.init(
             project=args.wandb_project_name,
+            dir=args.logs,
             name=args.name,
             id=args.name,
             notes=args.wandb_notes,

@@ -3,6 +3,7 @@ wandb/
 models/
 features/
 results/
+tmp/
 
 tests/data/
 *.pt
@@ -151,3 +152,8 @@ core.*
 
 # Allow
 !src/evaluation/misc/results_dbs/*
+owens-venv/
+pitzer-venv/
+
+# visualiziations
+data/visuals/

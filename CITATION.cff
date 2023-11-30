@@ -1,33 +1,116 @@
-cff-version: 1.1.0
-message: If you use this software, please cite it as below.
+---
+abstract: "Images of the natural world are an abundant source of biological
+  information. There are many computational methods and tools, particularly
+  computer vision, for extracting information from images. However, existing
+  methods consist of bespoke models, not adaptable or extendable from their
+  targeted task to new questions, contexts, and datasets. We thus develop the
+  first large-scale multimodal model, BioCLIP, for general biology questions on
+  images. We leverage the unique properties of biology (abundance and variety of
+  images and availability of rich structured biological knowledge) as the the
+  application domain for computer vision."
 authors:
-  - family-names: Ilharco
-    given-names: Gabriel
-  - family-names: Wortsman
-    given-names: Mitchell
-  - family-names: Wightman
-    given-names: Ross
-  - family-names: Gordon
-    given-names: Cade   
-  - family-names: Carlini
-    given-names: Nicholas
-  - family-names: Taori
-    given-names: Rohan
-  - family-names: Dave
-    given-names: Achal
-  - family-names: Shankar
-    given-names: Vaishaal
-  - family-names: Namkoong
-    given-names: Hongseok
-  - family-names: Miller
-    given-names: John
-  - family-names: Hajishirzi
-    given-names: Hannaneh
-  - family-names: Farhadi
-    given-names: Ali
-  - family-names: Schmidt
-    given-names: Ludwig
-title: OpenCLIP
-version: v0.1
-doi: 10.5281/zenodo.5143773
-date-released: 2021-07-28
+  - family-names: Stevens
+    given-names: Samuel
+  - family-names: Wu
+    given-names: Jiaman
+  - family-names: Thompson
+    given-names: "Matthew J."
+  - family-names: Campolongo
+    given-names: "Elizabeth G."
+  - family-names: Song
+    given-names: "Chan Hee"
+  - family-names: Carlyn
+    given-names: "David Edward"
+cff-version: 1.2.0
+date-released: "2023-11-30"
+identifiers:
+  - description: "The GitHub release URL of tag 0.1."
+    type: url
+    value: "https://github.com/Imageomics/bioclip/releases/tag/0.1"
+  - description: "The GitHub URL of the commit tagged with 0.1."
+    type: url
+    value: "https://github.com/Imageomics/bioclip/tree/<commit-hash>"
+keywords:
+  - clip
+  - biology
+  - CV
+  - imageomics
+  - animals
+  - species
+  - images
+  - taxonomy
+  - "rare species"
+  - "endangered species"
+  - "evolutionary biology"
+  - multimodal
+  - "knowledge-guided"
+license: MIT
+message: "If you use this software, please cite both the article from preferred-citation and the software itself."
+repository-code: "https://github.com/Imageomics/bioclip"
+title: BioCLIP
+version: 0.1
+type: software
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Stevens
+      given-names: Samuel
+    - family-names: Wu
+      given-names: Jiaman
+    - family-names: Thompson
+      given-names: "Matthew J."
+    - family-names: Campolongo
+      given-names: "Elizabeth G."
+    - family-names: Song
+      given-names: "Chan Hee"
+    - family-names: Carlyn
+      given-names: "David Edward"
+    - family-names: Dong
+      given-names: Li
+    - family-names: Dahdul
+      given-names: "Wasila M"
+    - family-names: Stewart
+      given-names: Charles
+    - family-names: "Berger-Wolf"
+      given-names: Tanya
+    - family-names: Chao
+      given-names: "Wei-Lun"
+    - family-names: Su
+      given-names: Yu
+  title: "BioCLIP: A Vision Foundation Model for the Tree of Life"
+  year: 2023
+  journal: arXiv
+  doi: "10.48550/arXiv.2311.18803"
+references:
+  - authors:
+      - family-names: Ilharco
+        given-names: Gabriel
+      - family-names: Wortsman
+        given-names: Mitchell
+      - family-names: Wightman
+        given-names: Ross
+      - family-names: Gordon
+        given-names: Cade
+      - family-names: Carlini
+        given-names: Nicholas
+      - family-names: Taori
+        given-names: Rohan
+      - family-names: Dave
+        given-names: Achal
+      - family-names: Shankar
+        given-names: Vaishaal
+      - family-names: Namkoong
+        given-names: Hongseok
+      - family-names: Miller
+        given-names: John
+      - family-names: Hajishirzi
+        given-names: Hannaneh
+      - family-names: Farhadi
+        given-names: Ali
+      - family-names: Schmidt
+        given-names: Ludwig
+    title: OpenCLIP
+    version: v0.1
+    type: software
+    doi: "10.5281/zenodo.5143773"
+    date-released: "2021-07-28"

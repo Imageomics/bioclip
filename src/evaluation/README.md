@@ -1,0 +1,27 @@
+# Parameters for Evaluation
+
+ - `label_filename`: File path of the CSV annotation file under the base folder in `data_root`
+ - `text_type`: Text type of annotations for test examples. String, default `asis`.
+ - `task_type`: retrieve: retrieve image embeddings from image encoder; eval: evaluate with pickle file containing image embeddings; all: evaluate from scratch which both retrieve image embeddings and evaluate the embeddings in one run. String, options: "retrieve", "eval", "all", default `all`.
+ - `nfold`: The number of times of sampling training examples during few-shot. `int`, default 5.
+ - `kshot_list`: A list of integers for k in k-shot. Default [1,5].
+ - `data_root`: File path of base folder which contains images and a CSV annotation file. String, default ''.
+ - `logs`: Where to store logs. Use None or 'none' to avoid storing logs. String, default None.
+ - `name`: Optional identifier for the experiment when storing logs. Otherwise use current time. String, default None.
+ - `workers`: Number of dataloader workers per GPU. `int` value, default 1.
+ - `batch-size`: Batch size per GPU. `int` value, default 64.
+ - `precision`: Floating point precision. Options: "amp", "amp_bf16", "amp_bfloat16", "bf16", "fp32". Default `amp`.
+ - `model`: Name of the vision backbone to use. String, default "ViT-B-16".
+ - `pretrained`: Use a pretrained CLIP model weights with the specified tag or file path. If running `few-shot.py` with `task_type=eval`, use this parameter as the pickle file path. Default "openai".
+ - `pretrained-image`: Load imagenet pretrained weights for image tower backbone if available. Default False.
+ - `image-mean`: Override default image mean value of dataset. `float` value, default None.
+ - `image-std`: Override default image std deviation of of dataset. `float` value, default None.
+ - `aug-cfg`
+ - `force-image-size`: Override default image size. `int` value, default None.
+ - `force-quick-gelu`: Force use of QuickGELU activation for non-OpenAI transformer models. Default is False.
+ - `force-custom-text`: Force use of CustomTextCLIP model (separate text-tower). Default is False.
+ - `torchscript`: `torch.jit.script` the model, also uses `jit` version of OpenAI models if `pretrained=='openai'`. Default is False.
+ - `trace`: `torch.jit.trace` the model for inference / eval only. Default is False.
+ - `debug`: If true, more information is logged. Default is False.
+ - `no-set-device-rank`: Don't set device index from local rank (when CUDA_VISIBLE_DEVICES restricted to one per proc). Default is False.
+ - `seed`: Default random seed, defaults to 0.

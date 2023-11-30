@@ -104,7 +104,7 @@ def parse_args(args):
     parser.add_argument(
         "--logs",
         type=str,
-        default="./logs/",
+        default="../storage/model",
         help="Where to store tensorboard logs. Use None to avoid storing logs.",
     )
     parser.add_argument(
@@ -120,25 +120,25 @@ def parse_args(args):
         help="Optional identifier for the experiment when storing logs. Otherwise use current time.",
     )
     parser.add_argument(
-        "--workers", type=int, default=1, help="Number of dataloader workers per GPU."
+        "--workers", type=int, default=8, help="Number of dataloader workers per GPU."
     )
     parser.add_argument(
-        "--batch-size", type=int, default=64, help="Batch size per GPU."
+        "--batch-size", type=int, default=4096, help="Batch size per GPU."
     )
     parser.add_argument(
-        "--epochs", type=int, default=32, help="Number of epochs to train for."
+        "--epochs", type=int, default=100, help="Number of epochs to train for."
     )
     parser.add_argument(
         "--epochs-cooldown", type=int, default=None,
         help="When scheduler w/ cooldown used, perform cooldown from total_epochs - cooldown_epochs onwards."
     )
-    parser.add_argument("--lr", type=float, default=None, help="Learning rate.")
+    parser.add_argument("--lr", type=float, default=1e-4, help="Learning rate.")
     parser.add_argument("--beta1", type=float, default=None, help="Adam beta 1.")
     parser.add_argument("--beta2", type=float, default=None, help="Adam beta 2.")
     parser.add_argument("--eps", type=float, default=None, help="Adam epsilon.")
     parser.add_argument("--wd", type=float, default=0.2, help="Weight decay.")
     parser.add_argument(
-        "--warmup", type=int, default=10000, help="Number of steps to warmup for."
+        "--warmup", type=int, default=1000, help="Number of steps to warmup for."
     )
     parser.add_argument(
         "--use-bn-sync",
@@ -195,12 +195,12 @@ def parse_args(args):
     parser.add_argument(
         "--model",
         type=str,
-        default="RN50",
+        default="ViT-B-16",
         help="Name of the vision backbone to use.",
     )
     parser.add_argument(
         "--pretrained",
-        default='',
+        default=None,
         type=str,
         help="Use a pretrained CLIP model weights with the specified tag or file path.",
     )
@@ -229,10 +229,10 @@ def parse_args(args):
         help="Freeze BatchNorm running stats in image tower for any locked layers.",
     )
     parser.add_argument(
-        '--image-mean', type=float, nargs='+', default=None, metavar='MEAN',
+        '--image-mean', type=float, nargs='+', default=[0.485, 0.456, 0.406], metavar='MEAN',
         help='Override default image mean value of dataset')
     parser.add_argument(
-        '--image-std', type=float, nargs='+', default=None, metavar='STD',
+        '--image-std', type=float, nargs='+', default=[0.229, 0.224, 0.225], metavar='STD',
         help='Override default image std deviation of of dataset')
     parser.add_argument('--aug-cfg', nargs='*', default={}, action=ParseKwargs)
     parser.add_argument(
@@ -302,7 +302,7 @@ def parse_args(args):
     )
     parser.add_argument(
         "--report-to",
-        default='',
+        default='tensorboard',
         type=str,
         help="Options are ['wandb', 'tensorboard', 'wandb,tensorboard']"
     )
@@ -375,7 +375,7 @@ def parse_args(args):
     parser.add_argument(
         "--log-every-n-steps",
         type=int,
-        default=100,
+        default=1,
         help="Log every n steps to tensorboard/console/wandb.",
     )
     parser.add_argument(
@@ -423,6 +423,13 @@ def parse_args(args):
         "--distill-pretrained",
         default=None,
         help='Which pre-trained weights to distill from, if any.'
+    )
+
+    parser.add_argument(
+        "--text_type",
+        type=str,
+        default='taxon',
+        help="Text type of annotation for text encoder.",
     )
     args = parser.parse_args(args)
 

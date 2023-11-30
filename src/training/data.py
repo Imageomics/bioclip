@@ -100,6 +100,10 @@ def get_dataset_size(shards):
     len_filename = os.path.join(dir_path, '__len__')
     if os.path.exists(sizes_filename):
         sizes = json.load(open(sizes_filename, 'r'))
+        # Lisa wants the shard sizes under the per_shard key.
+        # But this is not always the case.
+        if "per_shard" in sizes:
+            sizes = sizes["per_shard"]
         total_size = sum([int(sizes[os.path.basename(shard)]) for shard in shards_list])
     elif os.path.exists(len_filename):
         # FIXME this used to be eval(open(...)) but that seemed rather unsafe
@@ -172,7 +176,7 @@ def count_samples(dataloader):
 
 
 def filter_no_caption_or_no_image(sample):
-    has_caption = ('txt' in sample)
+    has_caption = any('txt' in key for key in sample)
     has_image = ('png' in sample or 'jpg' in sample or 'jpeg' in sample or 'webp' in sample)
     return has_caption and has_image
 
@@ -340,6 +344,9 @@ def get_wds_dataset(args, preprocess_img, is_train, epoch=0, floor=False, tokeni
         else:
             num_samples = args.val_num_samples or 0  # eval will just exhaust the iterator if not specified
 
+    logging.info(
+        f"Finish counting shard total size: {num_samples}.")
+        
     shared_epoch = SharedEpoch(epoch=epoch)  # create a shared epoch store to sync epoch to dataloader worker proc
     
     if resampled:
@@ -375,14 +382,26 @@ def get_wds_dataset(args, preprocess_img, is_train, epoch=0, floor=False, tokeni
             # at this point, we have an iterator over the shards assigned to each worker
             wds.tarfile_to_samples(handler=log_and_continue),
         ])
-    pipeline.extend([
-        wds.select(filter_no_caption_or_no_image),
-        wds.decode("pilrgb", handler=log_and_continue),
-        wds.rename(image="jpg;png;jpeg;webp", text="txt"),
-        wds.map_dict(image=preprocess_img, text=lambda text: tokenizer(text)[0]),
-        wds.to_tuple("image", "text"),
-        wds.batched(args.batch_size, partial=not is_train)
-    ])
+    if args.text_type == 'random':
+
+        pipeline.extend([
+            wds.select(filter_no_caption_or_no_image),
+            wds.decode("pilrgb", handler=log_and_continue),
+            wds.rename(image="jpg;png;jpeg;webp",sci="sci.txt", com="com.txt",taxon="taxon.txt", sci_com="sci_com.txt", taxon_com = "taxon_com.txt"),
+            wds.map_dict(image=preprocess_img, sci=lambda sci: tokenizer(sci)[0], com=lambda com: tokenizer(com)[0], taxon=lambda taxon: tokenizer(taxon)[0], sci_com=lambda sci_com: tokenizer(sci_com)[0], taxon_com=lambda taxon_com: tokenizer(taxon_com)[0]),
+            wds.to_tuple("image", "sci", "com", "taxon", "sci_com", "taxon_com"),
+            wds.batched(args.batch_size, partial=not is_train)
+        ])
+    else:
+        pipeline.extend([
+            wds.select(filter_no_caption_or_no_image),
+            wds.decode("pilrgb", handler=log_and_continue),
+            wds.rename(image="jpg;png;jpeg;webp", text=args.text_type+'.txt'),
+            wds.map_dict(image=preprocess_img, text=lambda text: tokenizer(text)[0]),
+            wds.to_tuple("image", "text"),
+            wds.batched(args.batch_size, partial=not is_train)
+        ])
+
 
     dataset = wds.DataPipeline(*pipeline)
 

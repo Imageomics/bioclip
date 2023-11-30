@@ -2,6 +2,7 @@ import json
 import logging
 import math
 import os
+import random
 import time
 
 import numpy as np
@@ -14,7 +15,7 @@ try:
 except ImportError:
     wandb = None
 
-from open_clip import get_cast_dtype, CLIP, CustomTextCLIP
+from ..open_clip import get_cast_dtype, CLIP, CustomTextCLIP
 from .distributed import is_master
 from .zero_shot import zero_shot_eval
 from .precision import get_autocast
@@ -88,7 +89,13 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
         if not args.skip_scheduler:
             scheduler(step)
 
-        images, texts = batch
+        # Randomly choose a text type for this batch
+        if args.text_type == 'random':
+            images, sci, com, taxon, sci_com, taxon_com = batch
+            random.seed(step)
+            texts = random.choice([sci, com, taxon, sci_com, taxon_com])
+        else:
+            images, texts = batch
         images = images.to(device=device, dtype=cast_dtype, non_blocking=True)
         texts = texts.to(device=device, non_blocking=True)
 
@@ -236,7 +243,7 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
 def evaluate(model, data, epoch, args, tb_writer=None):
     metrics = {}
     if not is_master(args):
-        return metrics
+        return
     device = torch.device(args.device)
     model.eval()
 
@@ -251,14 +258,16 @@ def evaluate(model, data, epoch, args, tb_writer=None):
         num_samples = 0
         samples_per_val = dataloader.num_samples
 
-        # FIXME this does not scale past small eval datasets
-        # all_image_features @ all_text_features will blow up memory and compute very quickly
         cumulative_loss = 0.0
         cumulative_gen_loss = 0.0
-        all_image_features, all_text_features = [], []
         with torch.no_grad():
             for i, batch in enumerate(dataloader):
-                images, texts = batch
+                if args.text_type == 'random':
+                    images, sci, com, taxon, sci_com, taxon_com = batch
+                    random.seed(i)
+                    texts = random.choice([sci, com, taxon, sci_com, taxon_com])
+                else:
+                    images, texts = batch
                 images = images.to(device=device, dtype=cast_dtype, non_blocking=True)
                 texts = texts.to(device=device, non_blocking=True)
 
@@ -267,10 +276,6 @@ def evaluate(model, data, epoch, args, tb_writer=None):
                     image_features = model_out["image_features"]
                     text_features = model_out["text_features"]
                     logit_scale = model_out["logit_scale"]
-                    # features are accumulated in CPU tensors, otherwise GPU memory exhausted quickly
-                    # however, system RAM is easily exceeded and compute time becomes problematic
-                    all_image_features.append(image_features.cpu())
-                    all_text_features.append(text_features.cpu())
                     logit_scale = logit_scale.mean()
                     logits_per_image = logit_scale * image_features @ text_features.t()
                     logits_per_text = logits_per_image.t()
@@ -296,21 +301,19 @@ def evaluate(model, data, epoch, args, tb_writer=None):
                         logging.info(
                             f"Generative Loss: {cumulative_gen_loss / num_samples:.6f}\t")
 
-            val_metrics = get_clip_metrics(
-                image_features=torch.cat(all_image_features),
-                text_features=torch.cat(all_text_features),
-                logit_scale=logit_scale.cpu(),
-            )
+
             loss = cumulative_loss / num_samples
-            metrics.update(
-                {**val_metrics, "clip_val_loss": loss.item(), "epoch": epoch, "num_samples": num_samples}
-            )
+            metrics.update({
+                "clip_val_loss": loss.item(), 
+                "epoch": epoch, 
+                "num_samples": num_samples
+            })
             if gen_loss is not None:
                 gen_loss = cumulative_gen_loss / num_samples
                 metrics.update({"val_generative_loss": gen_loss.item()})
 
     if not metrics:
-        return metrics
+        return
 
     logging.info(
         f"Eval Epoch: {epoch} "
@@ -318,34 +321,33 @@ def evaluate(model, data, epoch, args, tb_writer=None):
     )
 
     if args.save_logs:
-        for name, val in metrics.items():
-            if tb_writer is not None:
+        if tb_writer is not None:
+            for name, val in metrics.items():
                 tb_writer.add_scalar(f"val/{name}", val, epoch)
 
         with open(os.path.join(args.checkpoint_path, "results.jsonl"), "a+") as f:
             f.write(json.dumps(metrics))
             f.write("\n")
 
-    if args.wandb:
+    if args.report_to == 'wandb':
         assert wandb is not None, 'Please install wandb.'
         for name, val in metrics.items():
             wandb.log({f"val/{name}": val, 'epoch': epoch})
 
-    return metrics
 
-
-def get_clip_metrics(image_features, text_features, logit_scale):
+def get_clip_metrics(image_features, text_features, logit_scale, device):
     metrics = {}
-    logits_per_image = (logit_scale * image_features @ text_features.t()).detach().cpu()
-    logits_per_text = logits_per_image.t().detach().cpu()
-
+    logits_per_image = (logit_scale * image_features.to(device) @ text_features.to(device).t()).cpu()
+    logits_per_text = logits_per_image.t()
     logits = {"image_to_text": logits_per_image, "text_to_image": logits_per_text}
+
     ground_truth = torch.arange(len(text_features)).view(-1, 1)
 
     for name, logit in logits.items():
-        ranking = torch.argsort(logit, descending=True)
+        # argsort is also quite slow (20-30 seconds)
+        ranking = torch.argsort(logit, descending=True, dim=1)
         preds = torch.where(ranking == ground_truth)[1]
-        preds = preds.detach().cpu().numpy()
+        preds = preds.numpy()
         metrics[f"{name}_mean_rank"] = preds.mean() + 1
         metrics[f"{name}_median_rank"] = np.floor(np.median(preds)) + 1
         for k in [1, 5, 10]:
