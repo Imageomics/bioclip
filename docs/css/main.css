@@ -94,12 +94,14 @@ pre.reference {
 .centered {
   text-align: center;
 }
-
-/* Figures */
-.figure-container {
+.full-width {
   width: 98vw;
   position: relative;
   left: calc(-49vw + 50%);
+}
+
+/* Figures */
+.figure-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 4px;
