@@ -1,7 +1,7 @@
 :root {
   --secondary-color: #bb0000;
   --nice-gray: rgb(236, 240, 243);
-  --main-width: 80ch;
+  --main-width: 84ch;
   font-size: 1.0em;
   font-family: "Noto Sans Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
@@ -28,6 +28,15 @@ main {
   min-height: calc(var(--main-width));
 }
 
+.banded {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+
+  padding: 1em;
+  text-align: center;
+  background-color: var(--nice-gray);
+}
 
 /* Tables */
 td,th {
@@ -122,11 +131,10 @@ figure {
 figure > a {
   display: contents;
 }
-figure > a > img {
+figure > a > img,figure > img {
   width: 100%;
 }
 figcaption {
-  font-style: italic;
   text-align: left;
 }
 

@@ -60,37 +60,48 @@
         <img src="images/icons/arxiv.svg" /> Paper
       </a>
     </p>
-    <h2>Demo</h2>
-    <p>Hosted on <a href="https://huggingface.co/spaces/imageomics/bioclip-demo">HuggingFace spaces</a>.</p>
-    <iframe	src="https://imageomics-bioclip-demo.hf.space" frameborder="0" allowfullscreen></iframe>
+    <figure>
+      <img srcset="" src="images/hook.svg" alt="" loading="lazy">
+      <figcaption>
+        Figure 1: We use the CLIP objective (c) to train a ViT-B/16 on over 450K different class labels, all of which are taxonomic labels from the Tree of Life (a).
+        Because the text encoder is an <i>autoregressive</i> language model, the <i>order</i> representation can only depend on higher ranks like <i>class</i>, <i>phlyum</i> and <i>kingdom</i> (b).
+        This naturally leads to hierarchical representations for labels, helping the vision encoder learn image representations that are more aligned to the tree of life.
+      </figcaption>
+    </figure>
 
-    <h2>Abstract</h2>
+    <h2 class="banded">BioCLIP</h2>
+
     <p>
-      Images of the natural world, collected by a variety of cameras from drones to individual phones, are
-      increasingly abundant sources of biological information.
-      There is an explosion of computational methods and tools, particularly computer vision, for extracting
-      biologically relevant information from images for science and conservation.
-      Yet, currently, most of these are bespoke approaches designed for a specific task and are not easily adaptable
+      Images of the natural world are a super-abundant source of biological information.
+      There are many computational methods and tools, particularly computer vision, for extracting information from images.
+      <b>But</b>, existing methods are bespoke models for a specific task and are not adaptable
       or extendable to new questions, contexts, and datasets.
-      We develop the first large-scale multimodal model, BioCLIP, as a foundation for general organismal biology
-      questions on images.
-      We leverage the unique properties of biology as the the application domain for computer vision, namely the
-      abundance and variety of images about plants, animals, and fungi, together with the availability of rich
-      structured biological knowledge.
-      We curate and release TreeOfLife-10M (the largest and most diverse available dataset of biology images), train
-      BioCLIP, rigorously benchmark our approach on diverse fine-grained biology classification tasks, and find that
-      BioCLIP consistently and substantially outperforms existing baselines (by 17% to 20% absolute).
-      Intrinsic evaluation further reveals that BioCLIP has learned a hierarchical representation conforming to the
-      tree of life, shedding light on its strong generalizability.
     </p>
+    <p>
+      We develop the first large-scale multimodal model, <a href="https://huggingface.co/imageomics/bioclip">BioCLIP</a>, for general biology questions on images.
+      We leverage the unique properties of biology as the the application domain for computer vision:
+      <ol>
+        <li>The abundance and variety of images about plants, animals, and fungi.</li>
+        <li>The availability of rich structured biological knowledge.</li>
+      </ol>
+      We curate and release TreeOfLife-10M (the largest and most diverse available dataset of biology images), train BioCLIP, rigorously <a href="#evaluation">benchmark</a> our approach on diverse fine-grained biology classification tasks, and find that BioCLIP consistently and substantially outperforms existing baselines (by 17% to 20% absolute).
+      <a href="#intrinsic">Intrinsic evaluation</a> further reveals that BioCLIP has learned a hierarchical representation conforming to the tree of life, shedding light on its strong generalizability.
+    </p>
+        
+    <h3>Demo</h3>
+    <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.7.1/gradio.js"></script>
+    <gradio-app src="https://imageomics-bioclip-demo.hf.space"></gradio-app>
 
-    <h2 id="results">Results</h2>
+    <h2 class="banded" id="evaluation">Experiments</h2>
     <p>
       We evaluate BioCLIP and three baselines (<a href="">CLIP</a>, <a href="">OpenCLIP</a>, and an iNat-only model that
       uses the same procedure as BioCLIP but trained only on <a href="">iNat21</a>) on a diverse set of biology-related
       classification tasks.
       We do zero-shot classification with all models and report accuracy on the validation sets.
       Bold indicates the best performance for each task.
+    </p>
+    <p>
+      <b>BioCLIP outperforms both general-domain baselines <i>and</i> our new iNat-only ViT model.</b>
     </p>
     <p>
       Check out the paper for one-shot and five-shot results.
@@ -230,7 +241,7 @@
       </figure>
     </div>
 
-    <h2>Intrinsic Evaluation</h2>
+    <h2 id="intrinsic" class="banded">Intrinsic Evaluation</h2>
     <p>
       Why does BioCLIP work so well?
       We conduct an intrinsic evaluation to understand the representations learned by BioCLIP.
@@ -254,7 +265,7 @@
       </figcaption>
     </figure>
 
-    <h2>Dataset</h2>
+    <h2 class="banded" id="dataset">Dataset</h2>
     <p>
       TreeOfLife-10M is the largest and most diverse available dataset of biology images.
       We combine images from three sources, iNaturalist, BioSCAN-1M, and Encyclopedia of Life (<a href="https://eol.org">EOL</a>, accessed 29 July 2023), to create a dataset of
