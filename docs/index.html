@@ -18,7 +18,7 @@
     <h1>BioCLIP: A Vision Foundation Model for the Tree of Life</h1>
     <p class="centered">
       <sup>1</sup><a href="https://samuelstevens.me/">Samuel Stevens</a><sup>*</sup>,
-      <sup>1</sup>Jiamen (Lisa) Wu<sup>*</sup>,
+      <sup>1</sup>Jiaman (Lisa) Wu<sup>*</sup>,
       <sup>1</sup><a href="https://www.linkedin.com/in/thompson-m-j/">Matthew J Thompson</a>,
       <sup>1</sup><a href="https://egrace479.github.io/">Elizabeth G Campolongo</a>,
       <sup>1</sup><a href="https://chanh.ee/">Chan Hee (Luke) Song</a>,
@@ -60,16 +60,6 @@
         <img src="images/icons/arxiv.svg" /> Paper
       </a>
     </p>
-
-    <ol>
-      <li>Curate and release <a>TreeOfLife-10M</a> (the largest and most diverse available dataset of biology images).
-      </li>
-      <li>Train BioCLIP and release <a>weights</a> for public use</li>
-      <li>Benchmark BioCLIP on diverse fine-grained biology classification tasks, finding that BioCLIP consistently and
-        substantially <a href="#results">outperforms existing baselines</a> (by 18% absolute).</li>
-      <li>Intrinsically evaluate BioCLIP's representations.</li>
-    </ol>
-
     <h2>Demo</h2>
     <p>Hosted on <a href="https://huggingface.co/spaces/imageomics/bioclip-demo">HuggingFace spaces</a>.</p>
     <iframe	src="https://imageomics-bioclip-demo.hf.space" frameborder="0" allowfullscreen></iframe>
@@ -92,14 +82,6 @@
       BioCLIP consistently and substantially outperforms existing baselines (by 17% to 20% absolute).
       Intrinsic evaluation further reveals that BioCLIP has learned a hierarchical representation conforming to the
       tree of life, shedding light on its strong generalizability.
-    </p>
-
-    <h3>Updates</h3>
-
-    <p>
-    <ul>
-      <li>Dec 1st, 2023: Initial release!</li>
-    </ul>
     </p>
 
     <h2 id="results">Results</h2>
@@ -196,7 +178,7 @@
     </table>
 
     <h3>Evaluation Examples</h3>
-    <div class="figure-container full-width">
+    <div class="figure-container">
       <figure>
         <a href="images/bioclip_correct_fungi.png">
           <img srcset="" src="images/bioclip_correct_fungi.png" alt="" loading="lazy">
@@ -261,7 +243,7 @@
       This shows that BioCLIP has learned a rich feature representation following the hierarchical structure of the
       taxonomy, which helps explain its strong generalization across the tree of life.
     </p>
-    <figure class="full-width">
+    <figure>
       <a href="files/intrinsic.pdf">
         <img srcset="" src="images/intrinsic_small.png" alt="" loading="lazy">
       </a>
