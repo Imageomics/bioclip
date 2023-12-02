@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  margin-top: 2em;
+  margin: 0;
 }
 
 main {
@@ -28,17 +28,18 @@ main {
   min-height: calc(var(--main-width));
 }
 
-.banded {
-  width: 100vw;
-  position: relative;
-  left: calc(-50vw + 50%);
-
-  padding: 1em;
+h1 {
   text-align: center;
-  background-color: var(--nice-gray);
+  font-size: 2.8em;
+  line-height: 1.2em;
 }
 
-/* Tables */
+
+/***************
+  Tables
+***************/
+
+
 td,th {
   padding: 4px 8px;
   margin: 0;
@@ -86,7 +87,12 @@ pre.reference {
   border-radius: 4px;
 }
 
-/* Helpers */
+
+/***************
+  Helpers
+***************/
+
+
 .no-border-top {
   border-top: 0;
 }
@@ -108,8 +114,22 @@ pre.reference {
   position: relative;
   left: calc(-45vw + 50%);
 }
+.banded {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
 
-/* Figures */
+  padding: 1em;
+  text-align: center;
+  background-color: var(--nice-gray);
+}
+
+
+/***************
+  Figures
+***************/
+
+
 .figure-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -138,6 +158,12 @@ figcaption {
   text-align: left;
 }
 
+
+/***************
+  Pill Buttons
+***************/
+
+
 .pill-button {
   padding: 0.5em 1em;
   border-radius: 9999px;
@@ -158,9 +184,33 @@ figcaption {
   transform:translate(0, 0.125em);
 }
 
-iframe {
-  aspect-ratio: 4/5;
-  width: 100%;
+/***************
+  Dropdown
+***************/
+details {
+  margin-top: 6px;
+  display: inline-block;
+  min-width: 16ch;
+  text-align: center;
+  padding: 4px 12px;
+  position: relative;
+}
+details:hover {
+  cursor: pointer;
 }
 
+details > div.options {
+  position: absolute;
+  background: white;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 4px;
+}
 
+details > div.options > p {
+  margin: 0;
+  padding: 6px 2px;
+}
+details > div.options > p:hover {
+  background-color: var(--nice-gray);
+}

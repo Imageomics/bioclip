@@ -15,6 +15,17 @@
 
 <body>
   <main>
+    <div style="text-align: center">
+      <details>
+        <summary>More Research</summary>
+        <div class="options">
+          <p><a href="https://github.com/Imageomics/INTR">INTR</a></p>
+          <p><a href="https://mmmu-benchmark.github.io">MMMU Benchmark</a></p>
+          <p><a href="https://osu-nlp-group.github.io/Mind2Web">Mind2Web</a></p>
+          <p><a href="https://osu-nlp-group.github.io/MagicBrush">MagicBrush</a></p>
+        </div>
+      </details>
+    </div>
     <h1>BioCLIP: A Vision Foundation Model for the Tree of Life</h1>
     <p class="centered">
       <sup>1</sup><a href="https://samuelstevens.me/">Samuel Stevens</a><sup>*</sup>,
@@ -303,7 +314,14 @@
   year={2023},
 }</pre>
   </main>
-  <script src="js/scripts.js"></script>
+  <script>
+    const details = document.querySelector("details");
+    document.addEventListener("click", function (e) {
+      if (!details.contains(e.target)) {
+        details.removeAttribute("open");
+      }
+    });
+  </script>
 </body>
 
 </html>
