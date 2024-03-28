@@ -1,0 +1,216 @@
+:root {
+  --secondary-color: #bb0000;
+  --nice-gray: rgb(236, 240, 243);
+  --main-width: 84ch;
+  font-size: 1.0em;
+  font-family: "Noto Sans Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,*:before,*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  margin: 0 auto;
+  max-width: var(--main-width);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.7em;
+  min-height: calc(var(--main-width));
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.8em;
+  line-height: 1.2em;
+}
+
+
+/***************
+  Tables
+***************/
+
+
+td,th {
+  padding: 4px 8px;
+  margin: 0;
+}
+th {
+  text-align: center;
+  font-size: 0.9em;
+}
+table {
+  max-width: 100%;
+  display: inline-block;
+  overflow-x: scroll;
+  white-space: nowrap;
+
+  padding: 0;
+  margin: auto;
+}
+th {
+  border-top: 2px solid black;
+  border-bottom: 1px solid black;
+}
+tbody > tr:last-child > td {
+  border-bottom: 2px solid black;
+}
+/* When you hover over a table row, highlight its children table data elements without a rowspan element. */
+tbody > tr:hover { 
+  background-color: var(--nice-gray);
+}
+th.sticky,td.sticky {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: #fff;
+}
+
+pre.reference {
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  padding: 0.5em 0.5em;
+  white-space: pre;
+  word-wrap: normal;
+  line-height: 1.2em;
+  background-color: #f5f5f5;
+  font-size: 1.1em;
+  border-radius: 4px;
+}
+
+
+/***************
+  Helpers
+***************/
+
+
+.no-border-top {
+  border-top: 0;
+}
+.no-border-bottom {
+  border-bottom: 0;
+}
+.border-right {
+  border-right: 1px solid black;
+}
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.centered {
+  text-align: center;
+}
+.full-width {
+  width: max(90vw, 100%);
+  position: relative;
+  left: calc(-45vw + 50%);
+}
+.banded {
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+
+  padding: 1em;
+  text-align: center;
+  background-color: var(--nice-gray);
+}
+
+
+/***************
+  Figures
+***************/
+
+
+.figure-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 4px;
+  row-gap: 4px;
+}
+
+@media only screen and (max-width: 768px) {
+  .figure-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+figure {
+  margin: 0px;
+}
+
+/* Makes <a> behave like it doesn't exist with regards to flexbox */
+figure > a {
+  display: contents;
+}
+figure > a > img,figure > img {
+  width: 100%;
+}
+figcaption {
+  text-align: left;
+}
+
+
+/***************
+  Pill Buttons
+***************/
+
+
+.pill-button {
+  padding: 0.5em 1em;
+  border-radius: 9999px;
+  background-color: black;
+  color: white;
+  text-decoration: none;
+  margin-right: 0.25em;
+  white-space: nowrap;
+}
+
+.pill-button > span {
+  font-size: 1em;
+}
+
+.pill-button > img {
+  height: 1em;
+  display: inline-block;
+  transform:translate(0, 0.125em);
+}
+
+/***************
+  Dropdown
+***************/
+details {
+  margin-top: 6px;
+  display: inline-block;
+  min-width: 16ch;
+  text-align: center;
+  padding: 4px 12px;
+  position: relative;
+}
+details:hover {
+  cursor: pointer;
+}
+
+details > div.options {
+  position: absolute;
+  background: white;
+  width: 100%;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: 4px;
+}
+
+details > div.options > p {
+  margin: 0;
+  padding: 6px 2px;
+}
+details > div.options > p:hover {
+  background-color: var(--nice-gray);
+}

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xl="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="-5 -76 922 253" width="922" height="253">
+  <defs>
+    <marker orient="auto" overflow="visible" markerUnits="strokeWidth" id="FilledArrow_Marker" stroke-linejoin="miter" stroke-miterlimit="10" viewBox="-1 -4 10 8" markerWidth="10" markerHeight="8" color="black">
+      <g>
+        <path d="M 8 0 L 0 -3 L 0 3 Z" fill="currentColor" stroke="currentColor" stroke-width="1"/>
+      </g>
+    </marker>
+  </defs>
+  <g id="Canvas_1" stroke-opacity="1" fill="none" stroke="none" fill-opacity="1" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_2">
+      <title>Layer 2</title>
+      <g id="Graphic_189">
+        <rect x="-4" y="100" width="76" height="24" fill="#c0c0ff"/>
+        <path d="M -4 100 L 72 100 L 72 124 L -4 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(1 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="6.184" y="15">Plantae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_188">
+        <rect x="76" y="100" width="112" height="24" fill="#ffc0c0"/>
+        <path d="M 76 100 L 188 100 L 188 124 L 76 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(81 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.544" y="15">Tracheophyta</tspan>
+        </text>
+      </g>
+      <g id="Graphic_187">
+        <rect x="192" y="100" width="116" height="24" fill="#ffc0ff"/>
+        <path d="M 192 100 L 308 100 L 308 124 L 192 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(197 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.44" y="15">Polpodiopsida</tspan>
+        </text>
+      </g>
+      <g id="Graphic_186">
+        <rect x="312" y="100" width="104" height="24" fill="#c0ffc0"/>
+        <path d="M 312 100 L 416 100 L 416 124 L 312 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(317 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.224" y="15">Polypodiales</tspan>
+        </text>
+      </g>
+      <g id="Graphic_185">
+        <rect x="420" y="100" width="104" height="24" fill="#c0ffff"/>
+        <path d="M 420 100 L 524 100 L 524 124 L 420 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(425 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".032" y="15">Onocleaceae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_184">
+        <rect x="528" y="100" width="72" height="24" fill="#ffffc0"/>
+        <path d="M 528 100 L 600 100 L 600 124 L 528 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(533 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.216" y="15">Onoclea</tspan>
+        </text>
+      </g>
+      <g id="Graphic_183">
+        <rect x="604" y="100" width="64" height="24" fill="#ffaa41"/>
+        <path d="M 604 100 L 668 100 L 668 124 L 604 124 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+        <text transform="translate(609 102.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.216" y="15">hintonii</tspan>
+        </text>
+      </g>
+      <g id="Graphic_175">
+        <rect x="-4" y="-4" width="76" height="24" fill="#c0c0ff"/>
+        <rect x="-4" y="-4" width="76" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="6.184" y="15">Plantae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_174">
+        <rect x="-4" y="24" width="76" height="24" fill="#c0c0ff"/>
+        <rect x="-4" y="24" width="76" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(1 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="6.184" y="15">Plantae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_173">
+        <rect x="76" y="-4" width="112" height="24" fill="#ffc0c0"/>
+        <rect x="76" y="-4" width="112" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(81 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.544" y="15">Tracheophyta</tspan>
+        </text>
+      </g>
+      <g id="Graphic_172">
+        <rect x="76" y="24" width="112" height="24" fill="#ffc0c0"/>
+        <rect x="76" y="24" width="112" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(81 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.544" y="15">Tracheophyta</tspan>
+        </text>
+      </g>
+      <g id="Graphic_171">
+        <rect x="192" y="24" width="116" height="24" fill="#ffc0ff"/>
+        <rect x="192" y="24" width="116" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(197 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.44" y="15">Polpodiopsida</tspan>
+        </text>
+      </g>
+      <g id="Graphic_170">
+        <rect x="192" y="-4" width="116" height="24" fill="#ffc0ff"/>
+        <rect x="192" y="-4" width="116" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(197 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.44" y="15">Polpodiopsida</tspan>
+        </text>
+      </g>
+      <g id="Graphic_169">
+        <rect x="312" y="-4" width="104" height="24" fill="#c0ffc0"/>
+        <rect x="312" y="-4" width="104" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(317 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.224" y="15">Polypodiales</tspan>
+        </text>
+      </g>
+      <g id="Graphic_168">
+        <rect x="312" y="24" width="104" height="24" fill="#c0ffc0"/>
+        <rect x="312" y="24" width="104" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(317 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.224" y="15">Polypodiales</tspan>
+        </text>
+      </g>
+      <g id="Graphic_167">
+        <rect x="420" y="-4" width="104" height="24" fill="#c0ffff"/>
+        <rect x="420" y="-4" width="104" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(425 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".032" y="15">Onocleaceae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_166">
+        <rect x="420" y="24" width="104" height="24" fill="#c0ffff"/>
+        <rect x="420" y="24" width="104" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(425 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".032" y="15">Onocleaceae</tspan>
+        </text>
+      </g>
+      <g id="Graphic_165">
+        <rect x="528" y="-4" width="72" height="24" fill="#ffffc0"/>
+        <rect x="528" y="-4" width="72" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(533 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.216" y="15">Onoclea</tspan>
+        </text>
+      </g>
+      <g id="Graphic_164">
+        <rect x="528" y="24" width="72" height="24" fill="#ffffc0"/>
+        <rect x="528" y="24" width="72" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(533 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.216" y="15">Onoclea</tspan>
+        </text>
+      </g>
+      <g id="Graphic_163">
+        <rect x="604" y="-4" width="80" height="24" fill="#ffd400"/>
+        <rect x="604" y="-4" width="80" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(609 -1.223999)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="2.408" y="15">sensibilis</tspan>
+        </text>
+      </g>
+      <g id="Graphic_162">
+        <rect x="604" y="24" width="64" height="24" fill="#ffaa41"/>
+        <rect x="604" y="24" width="64" height="24" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(609 26.776)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="1.216" y="15">hintonii</tspan>
+        </text>
+      </g>
+      <g id="Graphic_161">
+        <text transform="translate(1 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".688" y="15">Kingdom</tspan>
+        </text>
+      </g>
+      <g id="Graphic_160">
+        <text transform="translate(81 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="24.32" y="15">Phylum</tspan>
+        </text>
+      </g>
+      <g id="Graphic_159">
+        <text transform="translate(197 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="33.152" y="15">Class</tspan>
+        </text>
+      </g>
+      <g id="Graphic_158">
+        <text transform="translate(317 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="26.696" y="15">Order</tspan>
+        </text>
+      </g>
+      <g id="Graphic_157">
+        <text transform="translate(425 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="23.736" y="15">Family</tspan>
+        </text>
+      </g>
+      <g id="Graphic_156">
+        <text transform="translate(533 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="7.736" y="15">Genus</tspan>
+        </text>
+      </g>
+      <g id="Graphic_155">
+        <text transform="translate(609 -33.224)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x=".408" y="15">Species</tspan>
+        </text>
+      </g>
+      <g id="Graphic_154">
+        <text transform="translate(1 70.5)" fill="black">
+          <tspan font-family="Times" font-size="16" fill="black" x="0" y="15">(b) Autoregressive Representations</tspan>
+        </text>
+      </g>
+      <g id="Graphic_153">
+        <text transform="translate(1 -69.5)" fill="black">
+          <tspan font-family="Times" font-size="16" fill="black" x="0" y="15">(a) Taxonomic Labels</tspan>
+        </text>
+      </g>
+      <g id="Graphic_152">
+        <rect x="772" y="-20" width="48" height="48" fill="#ffd400"/>
+        <rect x="772" y="-20" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(777 -3)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="12.663086" y="11">T1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_151">
+        <rect x="868" y="-20" width="48" height="48" fill="#ffaa41"/>
+        <rect x="868" y="-20" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(873 -3)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="12.663086" y="11">Tn</tspan>
+        </text>
+      </g>
+      <g id="Graphic_150">
+        <rect x="720" y="32" width="48" height="48" fill="#ffd401"/>
+        <rect x="720" y="32" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(725 49)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="14.001953" y="11">I1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_149">
+        <rect x="772" y="32" width="48" height="48" fill="#ccc"/>
+        <rect x="772" y="32" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(777 49)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="6.165039" y="11">I1·T1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_148">
+        <rect x="720" y="80" width="48" height="48" fill="white"/>
+        <rect x="720" y="80" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(725 97)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_147">
+        <rect x="868" y="32" width="48" height="48" fill="white"/>
+        <rect x="868" y="32" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(873 49)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="6.165039" y="11">I1·Tn</tspan>
+        </text>
+      </g>
+      <g id="Graphic_146">
+        <rect x="820" y="80" width="48" height="48" fill="#ccc"/>
+        <rect x="820" y="80" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(825 97)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_145">
+        <rect x="772" y="80" width="48" height="48" fill="white"/>
+        <rect x="772" y="80" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(777 97)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Line_144">
+        <line x1="684" y1="8" x2="762.1" y2="8" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_143">
+        <path d="M 668 36 L 700 36 L 700 13.5 C 694.5 13.5 694.5 2.5 700 2.5 L 700 -36 L 884.2026 -36" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Graphic_142">
+        <rect x="868" y="128" width="48" height="48" fill="#ccc"/>
+        <rect x="868" y="128" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(873 145)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="6.165039" y="11">In·Tn</tspan>
+        </text>
+      </g>
+      <g id="Graphic_141">
+        <rect x="820" y="-20" width="48" height="48" fill="white"/>
+        <rect x="820" y="-20" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(825 -3)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_140">
+        <rect x="720" y="128" width="48" height="48" fill="#ffa942"/>
+        <rect x="720" y="128" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(725 145)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="14.001953" y="11">In</tspan>
+        </text>
+      </g>
+      <g id="Graphic_139">
+        <rect x="772" y="128" width="48" height="48" fill="white"/>
+        <rect x="772" y="128" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(777 145)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="6.165039" y="11">In·T1</tspan>
+        </text>
+      </g>
+      <g id="Graphic_138">
+        <rect x="820" y="128" width="48" height="48" fill="white"/>
+        <rect x="820" y="128" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(825 145)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_137">
+        <rect x="868" y="80" width="48" height="48" fill="white"/>
+        <rect x="868" y="80" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(873 97)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_136">
+        <rect x="820" y="32" width="48" height="48" fill="white"/>
+        <rect x="820" y="32" width="48" height="48" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+        <text transform="translate(825 49)" fill="black">
+          <tspan font-family="Times" font-style="italic" font-size="12" fill="black" x="13.665039" y="11">…</tspan>
+        </text>
+      </g>
+      <g id="Graphic_135">
+        <text transform="translate(717 -69.5)" fill="black">
+          <tspan font-family="Times" font-size="16" fill="black" x="0" y="15">(c) Contrastive Objective</tspan>
+        </text>
+      </g>
+      <g id="Graphic_134">
+        <text transform="translate(694.776 171) rotate(-90)" fill="black">
+          <tspan font-family="Helvetica Neue" font-size="16" fill="black" x="11.728" y="15">Image Features</tspan>
+        </text>
+      </g>
+      <g id="Line_199">
+        <path d="M 34 124 L 34 156 L 376 156 L 376 133.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_200">
+        <path d="M 132 124 L 132 148 L 364 148 L 364 133.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+      <g id="Line_202">
+        <path d="M 250 124 L 250 140 L 352 140 L 352 133.9" marker-end="url(#FilledArrow_Marker)" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>
