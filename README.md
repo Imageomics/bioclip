@@ -21,7 +21,9 @@ The BioCLIP model is a ViT-B/16 pre-trained with the CLIP objective.
 Both the ViT and the (small) autoregressive text encoder are available to download on [Hugging Face](https://huggingface.co/imageomics/bioclip).
 
 The only dependency is the [`open_clip`](https://github.com/mlfoundations/open_clip) package.
+
 See the `examples/` directory for examples on how to use it.
+You can also use this package [pybioclip](https://github.com/Imageomics/pybioclip) or the [demo](https://huggingface.co/spaces/imageomics/bioclip-demo) on Hugging Face.
 
 ## Data
 
