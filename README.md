@@ -1,4 +1,5 @@
-# BioCLIP
+# BioCLIP [![DOI](https://zenodo.org/badge/725653485.svg)](https://zenodo.org/doi/10.5281/zenodo.10895870)
+
 
 This is the repository for the [BioCLIP model](https://huggingface.co/imageomics/bioclip) and the [TreeOfLife-10M dataset](https://huggingface.co/datasets/imageomics/TreeOfLife-10M). It contains the code used for training and the evaluation of BioCLIP (testing and visualizing embeddings). Additionally, we include a collection of scripts for forming, evaluating, and visualizing the data used for TreeOfLife-10M and the [Rare Species benchmark](https://huggingface.co/datasets/imageomics/rare-species) we created alongside it. The BioCLIP website is hosted from the `gh-pages` branch of this repository.
 
@@ -73,10 +74,10 @@ Our code (this repository):
 ```
 @software{bioclip2023code,
   author = {Samuel Stevens and Jiaman Wu and Matthew J. Thompson and Elizabeth G. Campolongo and Chan Hee Song and David Edward Carlyn},
-  doi = {},
+  doi = {10.5281/zenodo.10895871},
   title = {BioCLIP},
-  version = {v0.1},
-  year = {2023}
+  version = {v1.0.0},
+  year = {2024}
 }
 ```
 
