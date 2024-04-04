@@ -96,7 +96,7 @@ class DatasetFromFile(Dataset):
         else:
             label_filepath = os.path.join(self.basefilepath, label_filepath)
 
-        self.data = pd.read_csv(label_filepath, index_col=0)
+        self.data = pd.read_csv(label_filepath, index_col=0).fillna('')
         self.transform = transform
         self.data['class'] = naming_eval.to_classes(self.data,classes)
         self.classes = self.data['class'].unique()
