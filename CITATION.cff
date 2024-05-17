@@ -79,8 +79,8 @@ preferred-citation:
     - family-names: Su
       given-names: Yu
   title: "BioCLIP: A Vision Foundation Model for the Tree of Life"
-  year: 2023
-  journal: arXiv
+  year: 2024
+  collection-title: "Proceedings of IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)"
   doi: "10.48550/arXiv.2311.18803"
 references:
   - authors:
