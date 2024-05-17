@@ -52,7 +52,7 @@ title: BioCLIP
 version: 1.0.0
 type: software
 preferred-citation:
-  type: article
+  type: conference-paper
   authors:
     - family-names: Stevens
       given-names: Samuel
