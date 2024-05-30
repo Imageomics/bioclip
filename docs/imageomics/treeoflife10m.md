@@ -1,9 +1,8 @@
-# Dataset Card for TreeOfLife-10M
+# How to Create TreeOfLife-10M
 
+This was the process for creating the entire dataset, version 3.3 (which we used to train BioCLIP for the public release).
 
-## How to Create TreeOfLife-10M
-
-This is the process for creating the entire dataset, version 3.3 (which we used to train BioCLIP for the public release).
+**Note:** [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) has the EOL images, but not iNat21 or BIOSCAN-1M due to licensing restrictions. To reconstruct the _full_ dataset, please start at Step 6 after downloading [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) and making appropriate adjustments for your local setup to [`make-dataset-wds`](/slurm/make-dataset-wds.sh) and [`disk`](/src/imageomics/disk.py) (redirect absolute paths).
 
 1. **[`download_data`](/scripts/download_data.sh)**:
    - Run `bash scripts/download_data.sh` to download most of the metadata files.
@@ -36,6 +35,7 @@ This is the process for creating the entire dataset, version 3.3 (which we used 
    - Generates the catalog of all images in the dataset, which includes information about their original data source and taxonomic record.
    - Run `python scripts/evobio10m/make_catalog.py --dir /fs/ess/PAS2136/open_clip/data/evobio10m-v3.3/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /fs/ess/PAS2136/open_clip/data/evobio10m-v3.3/mapping.sqlite`
        - Creates a file `catalog.csv` in `--dir` which is a list of all names in the webdataset.
+       - **Note:** `mapping.sqlite` is a SQLite database comprised of just the `predicted-catalog.csv` and can be replaced by a SQLite database constructed from [TreeOfLife-10M/metadata/catalog.csv](https://huggingface.co/datasets/imageomics/TreeOfLife-10M/blob/main/metadata/catalog.csv), which may be overwritten on this step depending on where these are saved.
 9. **[`check_taxa`](/scripts/evobio10m/check_taxa.py)**:
    - This will check the actual catalog file for any taxa issues.
    - More information on this file can be found [here](/scripts/README.md).
