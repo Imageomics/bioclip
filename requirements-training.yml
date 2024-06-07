@@ -87,4 +87,3 @@ dependencies:
       - wcwidth==0.2.13
       - webdataset==0.2.86
       - werkzeug==3.0.1
-prefix: ./miniconda3/envs/bioclip-train
