@@ -63,8 +63,8 @@ def copy_eol_from_tar(sink, imgset_path):
 
     db = evobio10m_reproduce.get_db(db_path)
     select_stmt = "SELECT evobio10m_id, content_id, page_id FROM eol;"
-    evobio10m_id_lookup = {
-        (content_id, page_id): evobio10m_id
+    eol_ids_lookup = {
+        evobio10m_id: (content_id, page_id)
         for evobio10m_id, content_id, page_id in db.execute(select_stmt).fetchall()
     }
     db.close()
@@ -77,23 +77,30 @@ def copy_eol_from_tar(sink, imgset_path):
             eol_img = eol_reproduce.ImageFilename.from_filename(member.name)
             if eol_img.raw in image_blacklist:
                 continue
-
-            if (eol_img.content_id, eol_img.page_id) not in evobio10m_id_lookup:
+            
+            # Match on treeoflife_id filename
+            if eol_img.tol_id not in eol_ids_lookup:
+                print(f"Can't find the tol_id {eol_img.tol_id}")
                 logger.warning(
-                    "EvoBio10m ID missing. [content: %d, page: %d]",
-                    eol_img.content_id,
-                    eol_img.page_id,
+                    "EvoBio10m ID missing. [tol_id: %s]",
+                    eol_img.tol_id,
                 )
                 continue
 
-            global_id = evobio10m_id_lookup[(eol_img.content_id, eol_img.page_id)]
+            # fetching page ID
+            content_id, page_id = eol_ids_lookup[eol_img.tol_id]
+            global_id = eol_img.tol_id
+            
+            # checking for global id in split
             if global_id not in splits[args.split] or global_id in finished_ids:
                 continue
-
-            if eol_img.page_id not in name_lookup:
+            
+            # checking for page id
+            if page_id not in name_lookup:
                 continue
-
-            taxon, common, classes = name_lookup[eol_img.page_id]
+            
+            # using name lookup for taxon, common, classes
+            taxon, common, classes = name_lookup[page_id]
 
             if taxon.scientific in species_blacklist:
                 continue
@@ -107,9 +114,10 @@ def copy_eol_from_tar(sink, imgset_path):
                 )
                 continue
 
-            txt_dct = make_txt(taxon, common, classes) # ADDED `, classes` TO DEAL WITH ValueError: no handler found for classes
+            txt_dct = make_txt(taxon, common) 
+            # writing EOL
             sink.write(
-                {"__key__": global_id, "jpg": img, **txt_dct, "classes": classes}
+                {"__key__": global_id, "jpg": img, **txt_dct} #, "classes": classes} # REMOVED "classes", unused list of numbers, throws an error as an unknown extension with webdataset
             )
 
 
@@ -153,9 +161,11 @@ def copy_inat21_from_clsdir(sink, clsdir):
         if taxon.scientific in species_blacklist:
             continue
 
-        txt_dct = make_txt(taxon, common, classes) # ADDED `, classes` TO DEAL WITH ValueError: no handler found for classes
+        txt_dct = make_txt(taxon, common) #, classes)
         img = load_img(filepath).resize(resize_size)
-        sink.write({"__key__": global_id, "jpg": img, **txt_dct, "classes": classes})
+        # writing iNat
+        sink.write({"__key__": global_id, "jpg": img, **txt_dct} #, "classes": classes} # REMOVED "classes", unused list of numbers, throws an error as an unknown extension with webdataset
+                   )
 
 
 #########
@@ -193,10 +203,12 @@ def copy_bioscan_from_part(sink, part):
         if taxon.scientific in species_blacklist:
             continue
 
-        txt_dct = make_txt(taxon, common, classes) # ADDED `, classes` TO DEAL WITH ValueError: no handler found for classes
+        txt_dct = make_txt(taxon, common) #, classes)
         filepath = os.path.join(partdir, filename)
         img = load_img(filepath).resize(resize_size)
-        sink.write({"__key__": global_id, "jpg": img, **txt_dct, "classes": classes})
+        # writing BIOSCAN
+        sink.write({"__key__": global_id, "jpg": img, **txt_dct} #, "classes": classes} # REMOVED "classes", unused list of numbers, throws an error as an unknown extension with webdataset
+                   )
 
 
 ######
@@ -253,11 +265,14 @@ def make_txt(taxon, common):
     assert taxon is not None
     assert not taxon.empty, f"{common} has no taxon!"
 
-    if not common:
+    # test replacing the two if statements with
+    common = naming_reproduce.get_common(taxon, common)
+    '''if not common:
         common = taxon.scientific
     if not common:
-        common = taxon.taxonomic
+        common = taxon.taxonomic'''
 
+    # ex: kingdom Animalia phylum Arthropoda class ...
     tagged = " ".join(f"{tier} {value}" for tier, value in taxon.tagged)
 
     # IF YOU UPDATE THE KEYS HERE, BE SURE TO UPDATE check_status() TO LOOK FOR ALL OF
@@ -276,7 +291,6 @@ def make_txt(taxon, common):
         "sci_com.txt": f"a photo of {taxon.scientific} with common name {common}.",
         "taxon_com.txt": f"a photo of {taxon.taxonomic} with common name {common}.",
         "taxonTag_com.txt": f"a photo of {tagged} with common name {common}.",
-        "classes": classes, # ADDED TO DEAL WITH ValueError: no handler found for classes
     }
 
 
