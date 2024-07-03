@@ -1,11 +1,16 @@
 # How to Create TreeOfLife-10M
 
-**Note:** [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) has the EOL images, but not iNat21 or BIOSCAN-1M due to licensing restrictions. To reconstruct the _full_ dataset, please follow the steps outlined below in Reproduce TreeOfLife-10M.
+**Note:** 
+- [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) has the EOL images, but not iNat21 or BIOSCAN-1M due to licensing restrictions. 
+- To reconstruct the _full_ dataset, please follow the steps outlined below in _Reproduce TreeOfLife-10M_. This reproduction process is designed to be run on an HPC system using Slurm.
 
 ## Reproduce TreeOfLife-10M
 
 1. **Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M)**:
-   - Download the tar files and metadata from [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) on Hugging Face, and download [iNat21](https://github.com/visipedia/inat_comp/tree/master/2021#data) and [BIOSCAN-1M](https://zenodo.org/doi/10.5281/zenodo.8030064) into `data/TreeOfLife-10M/dataset/`, as specified in [`disk_reproduce`](/src/imageomics/disk_reproduce.py).  
+   - _Required:_ Change the account information in the component download script ([`scripts/submit_download_tree-of-life-10m_components`](/slurm/scripts/submit_download_tree-of-life-10m_components.bash)).
+   - _Optional:_ Change the dataset storage location and other Slurm parameters (within the "customize" section).
+   - Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) components by running [`scripts/submit_download_tree-of-life-10m_components`](/slurm/scripts/submit_download_tree-of-life-10m_components.bash). This will download the tar and metadata files from Hugging Face, as well as [iNat21](https://github.com/visipedia/inat_comp/tree/master/2021#data) and [BIOSCAN-1M](https://zenodo.org/doi/10.5281/zenodo.8030064) into `../data/TreeOfLife-10M/` relative to the script, in the format specified in [`disk_reproduce`](/src/imageomics/disk_reproduce.py).
+     - Note: This launches a collection of scripts which can also be run individually.
 2. **[`make-dataset-wds_reproduce`](/slurm/make-dataset-wds_reproduce.sh)**:
    - This actually creates the webdataset files by running [`make_wds_reproduce`](/scripts/evobio10m/make_wds_reproduce.py) for each of the splits.
    - Make appropriate adjustments for your local setup to [`make-dataset-wds_reproduce`](/slurm/make-dataset-wds_reproduce.sh) (i.e., change account and path information, settings as described below).
