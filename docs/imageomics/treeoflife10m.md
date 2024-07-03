@@ -7,9 +7,13 @@
 ## Reproduce TreeOfLife-10M
 
 1. **Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M)**:
-   - _Required:_ Change the account information in the component download script ([`scripts/submit_download_tree-of-life-10m_components`](/slurm/scripts/submit_download_tree-of-life-10m_components.bash)).
+   - _Required:_ Change the account information in the component download setup script ([`scripts/setup_download_tol-10m_components.bash`](/scripts/setup_download_tol-10m_components.bash)).
    - _Optional:_ Change the dataset storage location and other Slurm parameters (within the "customize" section).
-   - Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) components by running [`scripts/submit_download_tree-of-life-10m_components`](/slurm/scripts/submit_download_tree-of-life-10m_components.bash). This will download the tar and metadata files from Hugging Face, as well as [iNat21](https://github.com/visipedia/inat_comp/tree/master/2021#data) and [BIOSCAN-1M](https://zenodo.org/doi/10.5281/zenodo.8030064) into `../data/TreeOfLife-10M/` relative to the script, in the format specified in [`disk_reproduce`](/src/imageomics/disk_reproduce.py).
+   - Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) components by navigating to the `scripts/` directory and running:
+     ```bash
+	  bash submit_download_tol-10m_components.bash
+     ```
+     This will download the tar and metadata files from Hugging Face, as well as [iNat21](https://github.com/visipedia/inat_comp/tree/master/2021#data) and [BIOSCAN-1M](https://zenodo.org/doi/10.5281/zenodo.8030064) into `../data/TreeOfLife-10M/` relative to the script, in the format specified in [`disk_reproduce`](/src/imageomics/disk_reproduce.py).
      - Note: This launches a collection of scripts which can also be run individually.
 2. **[`make-dataset-wds_reproduce`](/slurm/make-dataset-wds_reproduce.sh)**:
    - This actually creates the webdataset files by running [`make_wds_reproduce`](/scripts/evobio10m/make_wds_reproduce.py) for each of the splits.
