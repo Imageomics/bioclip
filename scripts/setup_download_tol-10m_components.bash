@@ -12,10 +12,6 @@ export SCRIPT_DIR REPO_ROOT SLURM_SUBMIT_DIR
 ####################################### customize-below >>>
 
 
-# REQUIRED: 
-# You must change this to your own account
-SLURM_ACCOUNT="PAS2136"
-
 # optional:
 # Set a custom path for the dataset. 
 # It defaults to the location below within the git repository.
@@ -41,7 +37,7 @@ EOL_SLURM_OUTPUT="${REPO_ROOT}/logs/download_eol_%j.out"
 EOL_SLURM_ERROR="${REPO_ROOT}/logs/download_eol_%j.err"
 
 # Network intensive download (~11min on OSC, 340MiB/s), CPU-bound extraction (~88min total on OSC)
-INAT21_SLURM_TIME="0:10:00"
+INAT21_SLURM_TIME="4:00:00"
 INAT21_SLURM_NTASKS_PER_NODE=1
 INAT21_SLURM_OUTPUT="${REPO_ROOT}/logs/download_inat21_%j.out"
 INAT21_SLURM_ERROR="${REPO_ROOT}/logs/download_inat21_%j.err"
