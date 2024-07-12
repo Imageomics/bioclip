@@ -104,11 +104,12 @@ download() {
 
 export -f download
 
-# Function to extract BIOSCAN
+# Function to extract BIOSCAN-1M
 extract_bioscan() {
     local zip_file="$1"
     local output_dir="$2"
     local temp_dir="${output_dir}/temp"
+    local final_file_count=1128313
 
     mkdir -p "$temp_dir"
 
@@ -126,21 +127,32 @@ extract_bioscan() {
         local num_tasks=$(( available_cores < 4 ? available_cores : 4 ))
     fi
 
+    # Extract all parts in parallel
     total_parts=$(unzip -Z1 "$zip_file" | grep 'bioscan/images/cropped_256/part' | cut -d'/' -f4 | sort -u | wc -l)
     current_part=0
     unzip -Z1 "$zip_file" | grep 'bioscan/images/cropped_256/part' | cut -d'/' -f4 | sort -u | \
         xargs -P "$num_tasks" -I {} sh -c '
-            part_dir="$3/{}"
-            mkdir -p "$part_dir"
-            unzip -q "$1" "bioscan/images/cropped_256/{}/*" -d "$2"
-            mv "$2/bioscan/images/cropped_256/{}"/* "$part_dir/"
-            rm -rf "$2/bioscan"
-            current_part=$((current_part + 1))
-            echo "Extracted $current_part/$total_parts BIOSCAN parts"
-        ' _ "$zip_file" "$temp_dir" "$output_dir"
-       
+            unzip -q "$0" "bioscan/images/cropped_256/{}/*" -d "$1"
+            echo "Extracted part {}"
+        ' "$zip_file" "$temp_dir"
+
+    # Move all part directories to the final location
+    find "$temp_dir/bioscan/images/cropped_256/" -type d -name 'part*' -print0 | xargs -0 -I {} mv {} "$output_dir/"
+
+    # Remove the temp directory
     rm -rf "$temp_dir"
+
+    # Count the number of extracted files and verify
+    local extracted_file_count
+    extracted_file_count=$(find "$output_dir" -type f -name '*.jpg' | wc -l)
+    
+    if [ "$extracted_file_count" -ne "$final_file_count" ]; then
+        echo "Error: Expected $final_file_count files, but found $extracted_file_count files." >&2
+        return 1
+    fi
+
     rm "$zip_file"
+
     echo "Extracted BIOSCAN-1M to $output_dir"
 }
 
