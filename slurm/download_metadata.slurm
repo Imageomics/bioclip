@@ -4,9 +4,9 @@ set -ex
 time_start=$(date +%s)
 
 # Source setup script
-source "$SLURM_SUBMIT_DIR/setup_download_tol-10m_components.bash"
+source "$SLURM_SUBMIT_DIR/scripts/setup_download_tol-10m_components.bash"
 
-# source "../scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
+# source "scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
 
 # Download metadata
 hf_metadata_url_prefix="https://huggingface.co/datasets/imageomics/TreeOfLife-10M/resolve/main/metadata/"

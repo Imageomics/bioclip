@@ -2,17 +2,23 @@
 
 set -ex
 
-# Usage: sbatch --account <your-account> submit_download_tol-10m_components.bash
+# Usage: sbatch --account <your-account> scripts/submit_download_tol-10m_components.bash
+
+# Check if the current directory name is 'bioclip'
+if [ "$(basename "$PWD")" != "bioclip" ]; then
+  echo "Error: This script must be run from the 'bioclip' directory."
+  exit 1
+fi
 
 # Source the setup script
-source "setup_download_tol-10m_components.bash"
+source "scripts/setup_download_tol-10m_components.bash"
+export SBATCH_ACCOUNT=$SLURM_JOB_ACCOUNT # Applies to all child jobs
 
 # Ensure necessary directories exist
 mkdir -p "$logs_path"
 
 # Submit jobs
 metadata_job=$(sbatch \
-    --account=$SLURM_JOB_ACCOUNT \
     --time=$METADATA_SLURM_TIME \
     --nodes=$SLURM_NODES \
     --ntasks-per-node=$METADATA_SLURM_NTASKS_PER_NODE \
@@ -21,7 +27,6 @@ metadata_job=$(sbatch \
     "$SLURM_SUBMIT_DIR/download_metadata.slurm" | awk '{print $4}')
 
 eol_job=$(sbatch \
-    --account=$SLURM_JOB_ACCOUNT \
     --time=$EOL_SLURM_TIME \
     --nodes=$SLURM_NODES \
     --ntasks-per-node=$EOL_SLURM_NTASKS_PER_NODE \
@@ -30,7 +35,6 @@ eol_job=$(sbatch \
     "$SLURM_SUBMIT_DIR/download_eol.slurm" | awk '{print $4}')
 
 inat21_job=$(sbatch \
-    --account=$SLURM_JOB_ACCOUNT \
     --time=$INAT21_SLURM_TIME \
     --nodes=$SLURM_NODES \
     --ntasks-per-node=$INAT21_SLURM_NTASKS_PER_NODE \
@@ -39,7 +43,6 @@ inat21_job=$(sbatch \
     "$SLURM_SUBMIT_DIR/download_inat21.slurm" | awk '{print $4}')
 
 bioscan_job=$(sbatch \
-    --account=$SLURM_JOB_ACCOUNT \
     --time=$BIOSCAN_SLURM_TIME \
     --nodes=$SLURM_NODES \
     --ntasks-per-node=$BIOSCAN_SLURM_NTASKS_PER_NODE \
@@ -49,5 +52,4 @@ bioscan_job=$(sbatch \
 
 echo "Submitted jobs: metadata ($metadata_job), EOL ($eol_job), iNat21 ($inat21_job), BIOSCAN ($bioscan_job)"
 
-echo "Script dir: $SCRIPT_DIR"
 echo "Repo root: $REPO_ROOT"

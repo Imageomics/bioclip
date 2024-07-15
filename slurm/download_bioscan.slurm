@@ -4,9 +4,9 @@ set -ex
 time_start=$(date +%s)
 
 # Source setup script
-source "$SLURM_SUBMIT_DIR/setup_download_tol-10m_components.bash"
+source "$SLURM_SUBMIT_DIR/scripts/setup_download_tol-10m_components.bash"
 
-# source "../scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
+# source "scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
 
 # Download BIOSCAN data
 bioscan_url="https://zenodo.org/record/8030065/files/cropped_256.zip?download=1"

@@ -4,12 +4,12 @@ set -ex
 time_start=$(date +%s)
 
 # Source setup script
-source "$SLURM_SUBMIT_DIR/setup_download_tol-10m_components.bash"
+source "$SLURM_SUBMIT_DIR/scripts/setup_download_tol-10m_components.bash"
 
-# source "../scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
+# source "scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
 
 # Download EOL data
-for i in $(seq -w 01 63); do
+for i in $(seq -w 01 03); do
     file="image_set_${i}.tar.gz"
     url="https://huggingface.co/datasets/imageomics/TreeOfLife-10M/resolve/main/dataset/EOL/${file}?download=true"
     download "$url" "$eol_root" "$file"

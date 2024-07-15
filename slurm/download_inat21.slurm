@@ -4,9 +4,9 @@ set -ex
 time_start=$(date +%s)
 
 # Source setup script
-source "$SLURM_SUBMIT_DIR/setup_download_tol-10m_components.bash"
+source "$SLURM_SUBMIT_DIR/scripts/setup_download_tol-10m_components.bash"
 
-# source "../scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
+# source "scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
 
 # Download iNat21 data
 inat21_url="https://ml-inat-competition-datasets.s3.amazonaws.com/2021/train.tar.gz"
