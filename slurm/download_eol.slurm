@@ -9,7 +9,7 @@ source "$SLURM_SUBMIT_DIR/scripts/setup_download_tol-10m_components.bash"
 # source "scripts/setup_download_tol-10m_components.bash" # Use this for troubleshooting or running this component independently
 
 # Download EOL data
-for i in $(seq -w 01 03); do
+for i in $(seq -w 01 63); do
     file="image_set_${i}.tar.gz"
     url="https://huggingface.co/datasets/imageomics/TreeOfLife-10M/resolve/main/dataset/EOL/${file}?download=true"
     download "$url" "$eol_root" "$file"
