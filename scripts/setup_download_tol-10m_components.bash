@@ -125,6 +125,8 @@ extract_bioscan() {
     # Extract all parts in parallel
     total_parts=$(unzip -Z1 "$zip_file" | grep 'bioscan/images/cropped_256/part' | cut -d'/' -f4 | sort -u | wc -l)
     current_part=0
+    # Prevent race to create temp parent directories during unzip
+    mkdir -p "$temp_dir/bioscan/images/cropped_256/"
     unzip -Z1 "$zip_file" | grep 'bioscan/images/cropped_256/part' | cut -d'/' -f4 | sort -u | \
         xargs -P "$num_tasks" -I {} sh -c '
             unzip -q "$0" "bioscan/images/cropped_256/{}/*" -d "$1"
