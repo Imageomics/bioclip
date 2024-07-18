@@ -6,34 +6,52 @@
 
 ## Reproduce TreeOfLife-10M
 
+All of the following steps should be completed in the root directory of the repository. Start by setting up your conda environment with [`requirements-training.yml`](/requirements-training.yml):
+
+```
+conda env create -f requirements-training.yml --solver=libmamba -y
+pip install -e .
+```
+
 1. **Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M)**:
-   - _Required:_ Change the account information in the component download setup script ([`scripts/setup_download_tol-10m_components.bash`](/scripts/setup_download_tol-10m_components.bash)).
-   - _Optional:_ Change the dataset storage location and other Slurm parameters (within the "customize" section).
-   - Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) components by navigating to the `scripts/` directory and running:
+   - _Optional:_ Change the dataset storage location and other Slurm parameters (within the "customize" section) in the component download setup script ([`scripts/setup_download_tol-10m_components.bash`](/scripts/setup_download_tol-10m_components.bash)).
+   - Download [TreeOfLife-10M](https://huggingface.co/datasets/imageomics/TreeOfLife-10M) components by running:
      ```bash
-	  bash submit_download_tol-10m_components.bash
+	  sbatch --account <HPC-account> scripts/submit_download_tol-10m_components.bash
      ```
      This will download the tar and metadata files from Hugging Face, as well as [iNat21](https://github.com/visipedia/inat_comp/tree/master/2021#data) and [BIOSCAN-1M](https://zenodo.org/doi/10.5281/zenodo.8030064) into `../data/TreeOfLife-10M/` relative to the script, in the format specified in [`disk_reproduce`](/src/imageomics/disk_reproduce.py).
      - Note: This launches a collection of scripts which can also be run individually.
 2. **[`make-dataset-wds_reproduce`](/slurm/make-dataset-wds_reproduce.sh)**:
    - This actually creates the webdataset files by running [`make_wds_reproduce`](/scripts/evobio10m/make_wds_reproduce.py) for each of the splits.
    - Make appropriate adjustments for your local setup to [`make-dataset-wds_reproduce`](/slurm/make-dataset-wds_reproduce.sh) (i.e., change account and path information, settings as described below).
-   - Run `sbatch slurm/make-dataset-wds_reproduce.sh` on your HPC.
+   - On your HPC, run:
+     ```bash
+	  sbatch --account <HPC-account> slurm/make-dataset-wds_reproduce.sh
+     ```
       - This runs the `scripts/evobio10m/make_wds_reproduce.py` for each of the splits using 32 workers.
       - It takes a long time (6 hours) and requires lots of memory.
 3. **[`check_wds`](/scripts/evobio10m/check_wds.py)**:
    - Checks for bad shards and records them.
-   - Run `scripts/evobio10m/check_wds.py --shardlist SHARDS --workers 8 > logs/bad-shards.txt` 
+   - Run
+     ```bash
+	  python scripts/evobio10m/check_wds.py --shardlist SHARDS --workers 8 > logs/bad-shards.txt
+     ``` 
        - Writes a list of bad shards to `logs/bad-shards.txt`.
 4. **[`make_catalog_reproduce`](/scripts/evobio10m/make_catalog_reproduce.py)**:
    - Generates the catalog of all images in the dataset, which includes information about their original data source and taxonomic record.
-   - Run `python scripts/evobio10m/make_catalog_reproduce.py --dir /<path-to>/data/evobio10m-v3.3/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /<path-to>/data/evobio10m-v3.3/mapping.sqlite`
+   - Run
+     ```bash
+	  python scripts/evobio10m/make_catalog_reproduce.py --dir /<path-to>/data/evobio10m-v3.3/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /<path-to>/data/evobio10m-v3.3/mapping.sqlite
+     ```
        - Creates a file `catalog.csv` in `--dir` which is a list of all names in the webdataset.
        - **Note:** `mapping.sqlite` is a SQLite database comprised of just the `predicted-catalog.csv` and can be replaced by a SQLite database constructed from [TreeOfLife-10M/metadata/catalog.csv](https://huggingface.co/datasets/imageomics/TreeOfLife-10M/blob/main/metadata/catalog.csv), which may be overwritten on this step depending on where these are saved.
 5. **[`check_taxa`](/scripts/evobio10m/check_taxa.py)**:
    - This will check the actual catalog file for any taxa issues.
    - More information on this file can be found [here](/scripts/README.md).
-   - Run `python scripts/evobio10m/check_taxa.py /<path-to>/data/evobio10m-v3.3/catalog.csv`
+   - Run
+     ```bash
+	  python scripts/evobio10m/check_taxa.py /<path-to>/data/evobio10m-v3.3/catalog.csv
+     ```
 
 
 ## Original TreeOfLife-10M Generation
