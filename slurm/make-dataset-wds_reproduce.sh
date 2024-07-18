@@ -21,6 +21,6 @@ pip install -e /fs/scratch/PAS2136/thompsonmj/bioclip
 which python
 whoami
 
-~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag v3.3-cross-entropy --split val --workers $SLURM_CPUS_PER_TASK
-~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag v3.3-cross-entropy --split train_small --workers $SLURM_CPUS_PER_TASK
-~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag v3.3-cross-entropy --split train --workers $SLURM_CPUS_PER_TASK
+~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag CVPR-2024 --split val --workers $SLURM_CPUS_PER_TASK
+~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag CVPR-2024 --split train_small --workers $SLURM_CPUS_PER_TASK
+~/.conda/envs/bioclip-train/bin/python scripts/evobio10m/make_wds_reproduce.py --tag CVPR-2024 --split train --workers $SLURM_CPUS_PER_TASK
