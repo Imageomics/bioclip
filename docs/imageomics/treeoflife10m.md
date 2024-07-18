@@ -10,6 +10,7 @@ All of the following steps should be completed in the root directory of the repo
 
 ```
 conda env create -f requirements-training.yml --solver=libmamba -y
+conda activate bioclip-train
 pip install -e .
 ```
 
