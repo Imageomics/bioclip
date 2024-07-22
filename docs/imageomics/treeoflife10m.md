@@ -38,6 +38,10 @@ pip install -e .
 	  python scripts/evobio10m/check_wds.py --shardlist SHARDS --workers 8 > logs/bad-shards.txt
      ``` 
        - Writes a list of bad shards to `logs/bad-shards.txt`.
+       - For instance, if images are placed in the default location, run the following to check the training split:
+     ```bash
+	  python scripts/evobio10m/check_wds.py --shardlist 'data/TreeOfLife-10M/dataset/evobio10m-CVPR-2024/224x224/train/shard-{000000..000165}.tar' --workers 8 > logs/bad-shards.txt
+     ```   
 4. **[`make_catalog_reproduce`](/scripts/evobio10m/make_catalog_reproduce.py)**:
    - Generates the catalog of all images in the dataset, which includes information about their original data source and taxonomic record.
    - Run
