@@ -46,7 +46,7 @@ pip install -e .
    - Generates the catalog of all images in the dataset, which includes information about their original data source and taxonomic record.
    - Run
      ```bash
-	  python scripts/evobio10m/make_catalog_reproduce.py --dir /<path-to>/data/evobio10m-v3.3/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /<path-to>/data/evobio10m-v3.3/mapping.sqlite
+	  python scripts/evobio10m/make_catalog_reproduce.py --dir /<path-to>/data/evobio10m-CVPR-2024/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /<path-to>/data/evobio10m-CVPR-2024/mapping.sqlite
      ```
        - Creates a file `catalog.csv` in `--dir` which is a list of all names in the webdataset.
        - **Note:** `mapping.sqlite` is a SQLite database comprised of just the `predicted-catalog.csv` and can be replaced by a SQLite database constructed from [TreeOfLife-10M/metadata/catalog.csv](https://huggingface.co/datasets/imageomics/TreeOfLife-10M/blob/main/metadata/catalog.csv), which may be overwritten on this step depending on where these are saved.
@@ -55,7 +55,7 @@ pip install -e .
    - More information on this file can be found [here](/scripts/README.md).
    - Run
      ```bash
-	  python scripts/evobio10m/check_taxa.py /<path-to>/data/evobio10m-v3.3/catalog.csv
+	  python scripts/evobio10m/check_taxa.py /<path-to>/data/evobio10m-CVPR-2024/catalog.csv
      ```
 
 
