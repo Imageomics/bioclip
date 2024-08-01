@@ -77,12 +77,16 @@ def human(num):
     return f"{prefix}{num}"
 
 
-def write_rows(split_dir, writer):
+def write_rows(split_dir, writer, split):
     shardlist = [
         os.path.join(split_dir, shard)
         for shard in os.listdir(split_dir)
         if shard.endswith(".tar")
     ]
+
+    if not shardlist:
+        logger.warn(f"No .tar files found in directory {split_dir}. Skipping this directory.")
+        return
 
     dataset = wds.DataPipeline(
         wds.SimpleShardList(shardlist),
@@ -103,17 +107,34 @@ def write_rows(split_dir, writer):
 
             data_id = key_lookup[key]
             if data_id.eol_page_id:
-                taxon, _ = eol_name_lookup[data_id.eol_page_id]
+                taxon_data = eol_name_lookup[data_id.eol_page_id]
+                print(f"eol_name_lookup[{data_id.eol_page_id}] = {taxon_data}")
+                logger.debug(f"eol_name_lookup[{data_id.eol_page_id}] = {taxon_data}")
+                if len(taxon_data) != 3:
+                    logger.error(f"Unexpected value in eol_name_lookup: {taxon_data}")
+                taxon, common_name, _ = taxon_data
             elif data_id.bioscan_filename:
-                taxon, _ = bioscan_name_lookup[key]
+                taxon_data = bioscan_name_lookup[key]
+                print(f"bioscan_name_lookup[{key}] = {taxon_data}")
+                logger.debug(f"bioscan_name_lookup[{key}] = {taxon_data}")
+                if len(taxon_data) != 2:
+                    logger.error(f"Unexpected value in bioscan_name_lookup: {taxon_data}")
+                taxon, common_name, _ = taxon_data
             elif data_id.inat21_cls_name:
-                taxon, _ = inat21_name_lookup[data_id.inat21_cls_num]
+                taxon_data = inat21_name_lookup[data_id.inat21_cls_num]
+                print(f"inat21_name_lookup[{data_id.inat21_cls_num}] = {taxon_data}")
+                logger.debug(f"inat21_name_lookup[{data_id.inat21_cls_num}] = {taxon_data}")
+                if len(taxon_data) != 2:
+                    logger.error(f"Unexpected value in inat21_name_lookup: {taxon_data}")
+                taxon, common_name, _ = taxon_data
             else:
                 raise ValueError(data_id)
 
             writer.writerow(
-                (split, key, *data_id.to_tuple(), *taxon.to_tuple(), common)
+                (split, key, *data_id.to_tuple(), *taxon.to_tuple(), common_name)
             )
+
+
 
 
 if __name__ == "__main__":
@@ -171,5 +192,5 @@ if __name__ == "__main__":
                 )
                 continue
 
-            write_rows(split_dir, writer)
+            write_rows(split_dir, writer, split)
             logger.info("Wrote split. [split: %s, file: %s]", split, outfile)
