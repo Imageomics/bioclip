@@ -46,10 +46,22 @@ pip install -e .
    - Generates the catalog of all images in the dataset, which includes information about their original data source and taxonomic record.
    - Run
      ```bash
-	  python scripts/evobio10m/make_catalog_reproduce.py --dir /<path-to>/data/evobio10m-CVPR-2024/224x224/ --workers 8 --batch-size 256 --tag v3.3 --db /<path-to>/data/evobio10m-CVPR-2024/mapping.sqlite
+	  sbatch --account <HPC-account> --cpus-per-task <N> slurm/make-catalog_reproduce.slurm \
+	  --dir <path/to/splits> \
+	  --db <path/to/db> \
+	  --tag <tag> \
+	  --batch-size <batch-size>
      ```
        - Creates a file `catalog.csv` in `--dir` which is a list of all names in the webdataset.
        - **Note:** `mapping.sqlite` is a SQLite database comprised of just the `predicted-catalog.csv` and can be replaced by a SQLite database constructed from [TreeOfLife-10M/metadata/catalog.csv](https://huggingface.co/datasets/imageomics/TreeOfLife-10M/blob/main/metadata/catalog.csv), which may be overwritten on this step depending on where these are saved.
+       - For instance, if images are placed in the default location, run the following to generate the catalog file:
+     ```bash
+	  sbatch --account <HPC-account> --cpus-per-task 32 slurm/make-catalog_reproduce.slurm \
+	  --dir data/TreeOfLife-10M/dataset/evobio10m-CVPR-2024/224x224 \
+	  --db data/TreeOfLife-10M/metadata/mapping.sqlite \
+	  --tag CVPR-2024 \
+	  --batch-size 256
+     ```
 5. **[`check_taxa`](/scripts/evobio10m/check_taxa.py)**:
    - This will check the actual catalog file for any taxa issues.
    - More information on this file can be found [here](/scripts/README.md).
