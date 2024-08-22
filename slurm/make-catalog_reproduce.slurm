@@ -10,7 +10,7 @@
 # --dir <path/to/splits> \
 # --db <path/to/db> \
 # --tag <tag> \
-# --batch-size <batch-size>"
+# --batch-size <batch-size>
 # 
 # e.g.
 # 

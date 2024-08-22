@@ -1,25 +1,19 @@
 import argparse
 import sys
 import tarfile
-
 import webdataset as wds
 from torch.utils.data import DataLoader
-
 
 def log_and_continue(err):
     if isinstance(err, tarfile.ReadError) and len(err.args) == 3:
         print(err.args[2])
         return True
-
     if isinstance(err, ValueError):
         return True
-
     raise err
-
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -34,26 +28,31 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     keys = ("__key__", "jpg", "sci.txt", "com.txt", "sci_com.txt", "taxontag_com.txt")
+    
     dataset = wds.DataPipeline(
         wds.SimpleShardList(args.shardlist),
         wds.tarfile_to_samples(handler=log_and_continue),
         wds.decode("torchrgb"),
         wds.to_tuple(*keys, handler=log_and_continue),
     )
+    
     dataloader = DataLoader(
         dataset, num_workers=args.workers, batch_size=args.batch_size
     )
 
     itr = iter(dataloader)
     batches = 0
+    total_examples = 0
     while True:
         try:
             batch = next(itr)
+            batch_size = len(batch[0])
             batches += 1
+            total_examples += batch_size
 
             if batches % args.log_every == 0:
-                eprint(f"{batches} batches / {batches * args.batch_size} examples")
+                eprint(f"{batches} batches / {total_examples} examples (current batch size: {batch_size})")
         except StopIteration:
             break
 
-    eprint("Success!")
+    eprint(f"Success! Processed {batches} batches with a total of {total_examples} examples.")

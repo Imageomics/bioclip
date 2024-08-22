@@ -108,21 +108,18 @@ def write_rows(split_dir, writer, split):
             data_id = key_lookup[key]
             if data_id.eol_page_id:
                 taxon_data = eol_name_lookup[data_id.eol_page_id]
-                print(f"eol_name_lookup[{data_id.eol_page_id}] = {taxon_data}")
                 logger.debug(f"eol_name_lookup[{data_id.eol_page_id}] = {taxon_data}")
                 if len(taxon_data) != 3:
                     logger.error(f"Unexpected value in eol_name_lookup: {taxon_data}")
                 taxon, common_name, _ = taxon_data
             elif data_id.bioscan_filename:
                 taxon_data = bioscan_name_lookup[key]
-                print(f"bioscan_name_lookup[{key}] = {taxon_data}")
                 logger.debug(f"bioscan_name_lookup[{key}] = {taxon_data}")
                 if len(taxon_data) != 2:
                     logger.error(f"Unexpected value in bioscan_name_lookup: {taxon_data}")
                 taxon, common_name, _ = taxon_data
             elif data_id.inat21_cls_name:
                 taxon_data = inat21_name_lookup[data_id.inat21_cls_num]
-                print(f"inat21_name_lookup[{data_id.inat21_cls_num}] = {taxon_data}")
                 logger.debug(f"inat21_name_lookup[{data_id.inat21_cls_num}] = {taxon_data}")
                 if len(taxon_data) != 2:
                     logger.error(f"Unexpected value in inat21_name_lookup: {taxon_data}")
@@ -130,11 +127,12 @@ def write_rows(split_dir, writer, split):
             else:
                 raise ValueError(data_id)
 
+            # Use get_common to generate the common name if not available
+            common_name = naming_reproduce.get_common(taxon, common_name)
+
             writer.writerow(
                 (split, key, *data_id.to_tuple(), *taxon.to_tuple(), common_name)
             )
-
-
 
 
 if __name__ == "__main__":
