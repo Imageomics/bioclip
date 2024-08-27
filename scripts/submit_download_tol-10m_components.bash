@@ -2,13 +2,8 @@
 
 set -ex
 
+# Run from the root of the repository.
 # Usage: sbatch --account <your-account> scripts/submit_download_tol-10m_components.bash
-
-# Check if the current directory name is 'bioclip'
-if [ "$(basename "$PWD")" != "bioclip" ]; then
-  echo "Error: This script must be run from the 'bioclip' directory."
-  exit 1
-fi
 
 # Source the setup script
 source "scripts/setup_download_tol-10m_components.bash"
