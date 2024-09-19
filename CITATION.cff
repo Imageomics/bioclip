@@ -28,9 +28,9 @@ identifiers:
   - description: "The GitHub release URL of tag v1.0.2."
     type: url
     value: "https://github.com/Imageomics/bioclip/releases/tag/v1.0.2"
-  - description: "The GitHub URL of the commit tagged with v1.0.1." #update after release
+  - description: "The GitHub URL of the commit tagged with v1.0.2."
     type: url
-    value: "https://github.com/Imageomics/bioclip/tree/ae042ca4d7904b7f1be86264f427fc8a0a695588"
+    value: "https://github.com/Imageomics/bioclip/tree/b750fa8758d16e78ccc3de7ab86c1523d5de6148"
 keywords:
   - clip
   - biology
