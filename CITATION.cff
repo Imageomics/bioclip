@@ -22,15 +22,15 @@ authors:
   - family-names: Carlyn
     given-names: "David Edward"
 cff-version: 1.2.0
-date-released: "2024-03-29"
+date-released: "2024-09-19"
 identifiers:
-  - doi: "10.5281/zenodo.10895871"
-  - description: "The GitHub release URL of tag v1.0.0."
+  - doi: "10.5281/zenodo.10895870"
+  - description: "The GitHub release URL of tag v1.0.2."
     type: url
-    value: "https://github.com/Imageomics/bioclip/releases/tag/v1.0.0"
-  - description: "The GitHub URL of the commit tagged with v1.0.0."
+    value: "https://github.com/Imageomics/bioclip/releases/tag/v1.0.2"
+  - description: "The GitHub URL of the commit tagged with v1.0.1." #update after release
     type: url
-    value: "https://github.com/Imageomics/bioclip/tree/80ee3e36af403e05a225eccfe54cabf19b2e281e"
+    value: "https://github.com/Imageomics/bioclip/tree/ae042ca4d7904b7f1be86264f427fc8a0a695588"
 keywords:
   - clip
   - biology
@@ -49,7 +49,7 @@ license: MIT
 message: "If you use this software, please cite both the article from preferred-citation and the software itself."
 repository-code: "https://github.com/Imageomics/bioclip"
 title: BioCLIP
-version: 1.0.0
+version: 1.0.2
 type: software
 preferred-citation:
   type: conference-paper
