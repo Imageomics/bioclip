@@ -157,3 +157,7 @@ pitzer-venv/
 
 # visualiziations
 data/visuals/
+
+# Other
+containers
+data/TreeOfLife-10M

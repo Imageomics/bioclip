@@ -146,6 +146,13 @@ def check_common(df):
     if num_no_common > 0:
         logging.warning(f"{num_no_common} entries have null common. They are from {missing_common.data_source.unique()}.")
 
+    # print the first and last 5 entries with missing common
+    if num_no_common > 0:
+        logging.warning(f"First 5 entries with missing common: {missing_common.head()}")
+        logging.warning(f"Last 5 entries with missing common: {missing_common.tail()}")
+
+
+
 
 def main():
     # check for file
@@ -153,7 +160,7 @@ def main():
         sys.exit("Please provide a source CSV file.")
     else:
         try:
-            df = pd.read_csv(sys.argv[1])
+            df = pd.read_csv(sys.argv[1], low_memory=False)
         except Exception as e:
             sys.exit(e)
 
@@ -181,7 +188,6 @@ def main():
     check_sci_name(df[TAXA])
     check_id(df[TAXA])
     check_common(df[["data_source", "common"]])
-
 
 if __name__ == "__main__":
     main()
