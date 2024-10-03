@@ -23,8 +23,8 @@ Both the ViT and the (small) autoregressive text encoder are available to downlo
 
 The only dependency is the [`open_clip`](https://github.com/mlfoundations/open_clip) package.
 
-See the `examples/` directory for examples on how to use it.
-You can also use this package [pybioclip](https://github.com/Imageomics/pybioclip) or the [demo](https://huggingface.co/spaces/imageomics/bioclip-demo) on Hugging Face.
+See the [`examples/`](https://huggingface.co/imageomics/bioclip/tree/main/examples) directory on the [Hugging Face model repo](https://huggingface.co/imageomics/bioclip) for an example implementation.
+You can also use the [pybioclip](https://github.com/Imageomics/pybioclip) package or the [BioCLIP demo](https://huggingface.co/spaces/imageomics/bioclip-demo) on Hugging Face.
 
 ## Data
 
