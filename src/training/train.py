@@ -8,16 +8,9 @@ import time
 import numpy as np
 import torch
 import torch.nn.functional as F
-from torch.nn.parallel.distributed import DistributedDataParallel
+from torch.nn.utils.clip_grad import clip_grad_norm_
 
-try:
-    import wandb
-except ImportError:
-    wandb = None
-
-from ..open_clip import get_cast_dtype, CLIP, CustomTextCLIP
-from .distributed import is_master
-from .zero_shot import zero_shot_eval
+from open_clip import get_cast_dtype
 from .precision import get_autocast
 
 
@@ -39,15 +32,17 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
+
 def postprocess_clip_output(model_out):
     return {
         "image_features": model_out[0],
         "text_features": model_out[1],
-        "logit_scale": model_out[2]
+        "logit_scale": model_out[2],
     }
 
+
 def unwrap_model(model):
-    if hasattr(model, 'module'):
+    if hasattr(model, "module"):
         return model.module
     else:
         return model
@@ -60,18 +55,30 @@ def backward(total_loss, scaler):
         total_loss.backward()
 
 
-def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist_model, args, tb_writer=None):
+def train_one_epoch(
+    model,
+    data,
+    loss,
+    epoch,
+    optimizer,
+    scaler,
+    scheduler,
+    dist_model,
+    args,
+    tb_writer=None,
+):
     device = torch.device(args.device)
     autocast = get_autocast(args.precision)
     cast_dtype = get_cast_dtype(args.precision)
-
 
     model.train()
     if args.distill:
         dist_model.eval()
 
-    data['train'].set_epoch(epoch)  # set epoch in process safe manner via sampler or shared_epoch
-    dataloader = data['train'].dataloader
+    data["train"].set_epoch(
+        epoch
+    )  # set epoch in process safe manner via sampler or shared_epoch
+    dataloader = data["train"].dataloader
     num_batches_per_epoch = dataloader.num_batches // args.accum_freq
     sample_digits = math.ceil(math.log(dataloader.num_samples + 1, 10))
 
@@ -90,7 +97,7 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
             scheduler(step)
 
         # Randomly choose a text type for this batch
-        if args.text_type == 'random':
+        if args.text_type == "random":
             images, sci, com, taxon, sci_com, taxon_com = batch
             random.seed(step)
             texts = random.choice([sci, com, taxon, sci_com, taxon_com])
@@ -109,7 +116,9 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
                 if args.distill:
                     with torch.no_grad():
                         dist_model_out = dist_model(images, texts)
-                    model_out.update({f'dist_{k}' : v for k, v in dist_model_out.items()})
+                    model_out.update(
+                        {f"dist_{k}": v for k, v in dist_model_out.items()}
+                    )
                 losses = loss(**model_out, output_dict=True)
 
                 total_loss = sum(losses.values())
@@ -149,7 +158,9 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
                     inputs = {}
                     for key, val in accum_features.items():
                         accumulated = accum_features[key]
-                        inputs[key] = torch.cat(accumulated[:j] +  [model_out[key]] + accumulated[j + 1:])
+                        inputs[key] = torch.cat(
+                            accumulated[:j] + [model_out[key]] + accumulated[j + 1 :]
+                        )
                     losses = loss(**inputs, logit_scale=logit_scale, output_dict=True)
                     del inputs
                     total_loss = sum(losses.values())
@@ -159,20 +170,22 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
         if scaler is not None:
             if args.horovod:
                 optimizer.synchronize()
-                scaler.unscale_(optimizer)
                 if args.grad_clip_norm is not None:
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip_norm, norm_type=2.0)
+                    clip_grad_norm_(
+                        model.parameters(), args.grad_clip_norm, norm_type=2.0
+                    )
                 with optimizer.skip_synchronize():
                     scaler.step(optimizer)
-            else:
                 if args.grad_clip_norm is not None:
                     scaler.unscale_(optimizer)
-                    torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip_norm, norm_type=2.0)
+                    clip_grad_norm_(
+                        model.parameters(), args.grad_clip_norm, norm_type=2.0
+                    )
                 scaler.step(optimizer)
             scaler.update()
         else:
             if args.grad_clip_norm is not None:
-                torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip_norm, norm_type=2.0)
+                clip_grad_norm_(model.parameters(), args.grad_clip_norm, norm_type=2.0)
             optimizer.step()
 
         # reset gradient accum, if enabled
@@ -186,7 +199,10 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
         batch_time_m.update(time.time() - end)
         end = time.time()
         batch_count = i_accum + 1
-        if is_master(args) and (i_accum % args.log_every_n_steps == 0 or batch_count == num_batches_per_epoch):
+        if (
+            i_accum % args.log_every_n_steps == 0
+            or batch_count == num_batches_per_epoch
+        ):
             batch_size = len(images)
             num_samples = batch_count * batch_size * args.accum_freq * args.world_size
             samples_per_epoch = dataloader.num_samples
@@ -201,12 +217,16 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
             logit_scale_scalar = logit_scale.item()
             loss_log = " ".join(
                 [
-                    f"{loss_name.capitalize()}: {loss_m.val:#.5g} ({loss_m.avg:#.5g})" 
+                    f"{loss_name.capitalize()}: {loss_m.val:#.5g} ({loss_m.avg:#.5g})"
                     for loss_name, loss_m in losses_m.items()
                 ]
             )
-            samples_per_second = args.accum_freq * args.batch_size * args.world_size / batch_time_m.val
-            samples_per_second_per_gpu = args.accum_freq * args.batch_size / batch_time_m.val
+            samples_per_second = (
+                args.accum_freq * args.batch_size * args.world_size / batch_time_m.val
+            )
+            samples_per_second_per_gpu = (
+                args.accum_freq * args.batch_size / batch_time_m.val
+            )
             logging.info(
                 f"Train Epoch: {epoch} [{num_samples:>{sample_digits}}/{samples_per_epoch} ({percent_complete:.0f}%)] "
                 f"Data (t): {data_time_m.avg:.3f} "
@@ -222,17 +242,14 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
                 "samples_per_second": samples_per_second,
                 "samples_per_second_per_gpu": samples_per_second_per_gpu,
                 "scale": logit_scale_scalar,
-                "lr": optimizer.param_groups[0]["lr"]
-            }            
-            log_data.update({name:val.val for name,val in losses_m.items()})
+                "lr": optimizer.param_groups[0]["lr"],
+            }
+            log_data.update({name: val.val for name, val in losses_m.items()})
 
             for name, val in log_data.items():
                 name = "train/" + name
                 if tb_writer is not None:
                     tb_writer.add_scalar(name, val, step)
-                if args.wandb:
-                    assert wandb is not None, 'Please install wandb.'
-                    wandb.log({name: val, 'step': step})
 
             # resetting batch / data time meters per log window
             batch_time_m.reset()
@@ -242,19 +259,17 @@ def train_one_epoch(model, data, loss, epoch, optimizer, scaler, scheduler, dist
 
 def evaluate(model, data, epoch, args, tb_writer=None):
     metrics = {}
-    if not is_master(args):
-        return
     device = torch.device(args.device)
     model.eval()
-
-    zero_shot_metrics = zero_shot_eval(model, data, epoch, args)
-    metrics.update(zero_shot_metrics)
 
     autocast = get_autocast(args.precision)
     cast_dtype = get_cast_dtype(args.precision)
 
-    if 'val' in data and (args.val_frequency and ((epoch % args.val_frequency) == 0 or epoch == args.epochs)):
-        dataloader = data['val'].dataloader
+    if "val" in data and (
+        args.val_frequency
+        and ((epoch % args.val_frequency) == 0 or epoch == args.epochs)
+    ):
+        dataloader = data["val"].dataloader
         num_samples = 0
         samples_per_val = dataloader.num_samples
 
@@ -262,7 +277,7 @@ def evaluate(model, data, epoch, args, tb_writer=None):
         cumulative_gen_loss = 0.0
         with torch.no_grad():
             for i, batch in enumerate(dataloader):
-                if args.text_type == 'random':
+                if args.text_type == "random":
                     images, sci, com, taxon, sci_com, taxon_com = batch
                     random.seed(i)
                     texts = random.choice([sci, com, taxon, sci_com, taxon_com])
@@ -283,34 +298,41 @@ def evaluate(model, data, epoch, args, tb_writer=None):
                     batch_size = images.shape[0]
                     labels = torch.arange(batch_size, device=device).long()
                     total_loss = (
-                        F.cross_entropy(logits_per_image, labels) +
-                        F.cross_entropy(logits_per_text, labels)
+                        F.cross_entropy(logits_per_image, labels)
+                        + F.cross_entropy(logits_per_text, labels)
                     ) / 2
 
                     gen_loss = maybe_compute_generative_loss(model_out)
 
                 cumulative_loss += total_loss * batch_size
                 num_samples += batch_size
-                if is_master(args) and (i % 100) == 0:
+                if i % 100 == 0:
                     logging.info(
                         f"Eval Epoch: {epoch} [{num_samples} / {samples_per_val}]\t"
-                        f"Clip Loss: {cumulative_loss / num_samples:.6f}\t")
+                        f"Clip Loss: {cumulative_loss / num_samples:.6f}\t"
+                    )
 
                     if gen_loss is not None:
                         cumulative_gen_loss += gen_loss * batch_size
                         logging.info(
-                            f"Generative Loss: {cumulative_gen_loss / num_samples:.6f}\t")
-
+                            f"Generative Loss: {cumulative_gen_loss / num_samples:.6f}\t"
+                        )
 
             loss = cumulative_loss / num_samples
-            metrics.update({
-                "clip_val_loss": loss.item(), 
-                "epoch": epoch, 
-                "num_samples": num_samples
-            })
+            if isinstance(loss, torch.Tensor):
+                loss = loss.item()
+            metrics.update(
+                {
+                    "clip_val_loss": loss,
+                    "epoch": epoch,
+                    "num_samples": num_samples,
+                }
+            )
             if gen_loss is not None:
                 gen_loss = cumulative_gen_loss / num_samples
-                metrics.update({"val_generative_loss": gen_loss.item()})
+                if isinstance(gen_loss, torch.Tensor):
+                    gen_loss = gen_loss.item()
+                metrics.update({"val_generative_loss": gen_loss})
 
     if not metrics:
         return
@@ -329,15 +351,12 @@ def evaluate(model, data, epoch, args, tb_writer=None):
             f.write(json.dumps(metrics))
             f.write("\n")
 
-    if args.report_to == 'wandb':
-        assert wandb is not None, 'Please install wandb.'
-        for name, val in metrics.items():
-            wandb.log({f"val/{name}": val, 'epoch': epoch})
-
 
 def get_clip_metrics(image_features, text_features, logit_scale, device):
     metrics = {}
-    logits_per_image = (logit_scale * image_features.to(device) @ text_features.to(device).t()).cpu()
+    logits_per_image = (
+        logit_scale * image_features.to(device) @ text_features.to(device).t()
+    ).cpu()
     logits_per_text = logits_per_image.t()
     logits = {"image_to_text": logits_per_image, "text_to_image": logits_per_text}
 
