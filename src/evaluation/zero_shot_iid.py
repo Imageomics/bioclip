@@ -85,7 +85,7 @@ def run(model, classifier, dataloader, args):
                 image_features = model.encode_image(images)
                 image_features = F.normalize(image_features, dim=-1)
                 # logits = 100.0 * image_features @ classifier
-                logits = model.logit_scale * image_features @ classifier
+                logits = model.logit_scale.exp() * image_features @ classifier
 
             # measure accuracy
             acc = accuracy(logits, target, topk=topk.keys())
