@@ -109,20 +109,14 @@ def write_rows(split_dir, writer, split):
             if data_id.eol_page_id:
                 taxon_data = eol_name_lookup[data_id.eol_page_id]
                 logger.debug(f"eol_name_lookup[{data_id.eol_page_id}] = {taxon_data}")
-                if len(taxon_data) != 3:
-                    logger.error(f"Unexpected value in eol_name_lookup: {taxon_data}")
                 taxon, common_name, _ = taxon_data
             elif data_id.bioscan_filename:
                 taxon_data = bioscan_name_lookup[key]
                 logger.debug(f"bioscan_name_lookup[{key}] = {taxon_data}")
-                if len(taxon_data) != 2:
-                    logger.error(f"Unexpected value in bioscan_name_lookup: {taxon_data}")
                 taxon, common_name, _ = taxon_data
             elif data_id.inat21_cls_name:
                 taxon_data = inat21_name_lookup[data_id.inat21_cls_num]
                 logger.debug(f"inat21_name_lookup[{data_id.inat21_cls_num}] = {taxon_data}")
-                if len(taxon_data) != 2:
-                    logger.error(f"Unexpected value in inat21_name_lookup: {taxon_data}")
                 taxon, common_name, _ = taxon_data
             else:
                 raise ValueError(data_id)
