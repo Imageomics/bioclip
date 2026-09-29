@@ -266,7 +266,7 @@ def clean_name(name):
 
 def load_name_lookup(path, keytype=str):
     """
-    Returns dict[key, (taxonomic, common)]
+    Returns dict[key, (Taxon, common, classes)]
     """
     with open(path) as fd:
         return {
